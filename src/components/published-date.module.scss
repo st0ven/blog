@@ -1,0 +1,17 @@
+@import "~styles/colors";
+
+.date-box{
+  padding: 0rem;
+  color: color(--color-dark);
+  font-size: 0.875rem;
+  display: grid;
+  row-gap: 0.25rem;
+}
+
+.title {
+  font-weight: 400;
+}
+.value {
+  font-weight: 400;
+  color: color(--color-dark1);
+}

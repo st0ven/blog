@@ -1,0 +1,42 @@
+@import "~styles/colors";
+@import "~styles/queries";
+
+.container {
+  display: grid;
+  grid-template-areas: "header header header" ". main ." "footer footer footer";
+  grid-template-rows: auto 1fr auto;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  grid-area: header;
+  grid-row: 1;
+  position: relative;
+  color: color(--color-dark);
+}
+
+.main {
+  grid-row: 2;
+  grid-area: main;
+  position: relative;
+  box-sizing: border-box;
+  padding: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  flex-grow: 1;
+  justify-self: center;
+  @include breakpoint(large){
+    padding: 2rem;
+  }
+  @include breakpoint(x-large) {
+    padding: 2rem;
+  }
+}
+
+.footer {
+  grid-row: 3;
+  grid-area: footer;
+  position: relative;
+  color: color(--color-dark);
+}

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "jsx": "react",
+    "esModuleInterop": true,
+    "paths": {
+      "~components/*": ["components/*"],
+      "~pages/*": ["pages/*"],
+      "~resources/*": ["resources/*"],
+      "~styles/*": ["styles/*"],
+      "~templates/*": ["templates/*"]
+    }
+  }
+}
