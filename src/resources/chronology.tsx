@@ -1,42 +1,7 @@
-export const monthsMappedByIndex: any = {
-  0: "january",
-  1: "febuary",
-  2: "march",
-  3: "april",
-  4: "may",
-  5: "june",
-  6: "july",
-  7: "august",
-  8: "september",
-  9: "october",
-  10: "november",
-  11: "december",
-}
-
-export interface ArticleDate {
-  year: string
-  month: string
-  day: string
-}
-
 export interface ChronologicalArticleGroup {
-  year: string, 
-  month: string,
+  year: number
+  month: string
   articles: Array<any>
-}
-
-/* 
-  Given a date string in format of YYYY-MM-DD, converts to an object of
-  format ArticleDate, and returns the new object.
-*/
-export function convertPostDateStringToObject(dateString: string): ArticleDate {
-  const dateArray: Array<string> = dateString.split("-")
-  const dateObj: ArticleDate = {
-    year: dateArray[0],
-    month: dateArray[1],
-    day: dateArray[2],
-  }
-  return dateObj
 }
 
 /*
@@ -46,14 +11,15 @@ export function convertPostDateStringToObject(dateString: string): ArticleDate {
 */
 export function findArticleDateGroup(
   sortedGroup: Array<ChronologicalArticleGroup>,
-  articleDate: ArticleDate
+  _month: string,
+  _year: number
 ): ChronologicalArticleGroup | undefined {
   return (function findGroup(
     index: number
   ): ChronologicalArticleGroup | undefined {
     if (sortedGroup[index]) {
       const { month, year }: ChronologicalArticleGroup = sortedGroup[index]
-      return year === articleDate.year && month === articleDate.month
+      return year === _year && month === _month
         ? sortedGroup[index]
         : findGroup(++index)
     } else return undefined
@@ -69,25 +35,62 @@ export function findArticleDateGroup(
 export function organizePostChronologically(
   articles: Array<any>
 ): Array<ChronologicalArticleGroup> {
+  // create a placeholder array to store the ordered groups of articles
   const orderedArticles: Array<ChronologicalArticleGroup> = []
+  // loop through articles list provided via API to organize
   articles.map(({ node }: any) => {
+    // extract date and year component
     const { authored_date } = node
-    const articleDate: ArticleDate = convertPostDateStringToObject(
-      authored_date
-    )
+    const month: string = getLocaleMonthFromDateString(authored_date)
+    const year: number = getYearFromDateString(authored_date)
+    // if there is already an existing article group of this date and year,
+    // fetch a reference to that group
     const existingArticleGroup:
       | ChronologicalArticleGroup
-      | undefined = findArticleDateGroup(orderedArticles, articleDate)
-
-    if (existingArticleGroup) {
-      existingArticleGroup.articles.unshift(node)
-    } else {
-      orderedArticles.unshift({
-        month: articleDate.month,
-        year: articleDate.year,
-        articles: [node],
-      })
-    }
+      | undefined = findArticleDateGroup(orderedArticles, month, year)
+    // if the group was found, add the article to the list of articles in the group.
+    // otherwise, add a new group to the top of the group stack
+    existingArticleGroup
+      ? existingArticleGroup.articles.unshift(node)
+      : orderedArticles.unshift({
+          month,
+          year,
+          articles: [node],
+        })
   })
   return orderedArticles
+}
+
+// returns the local month name based on a date string converted to date object
+export function getLocaleMonthFromDateString(mmddyyyy: string): string {
+  const date: Date = new Date(mmddyyyy)
+  return date.toLocaleString("default", {
+    month: "long",
+  })
+}
+
+// find the numeric year from a date string as a number
+export function getYearFromDateString(mmddyyyy: string): number {
+  const date: Date = new Date(mmddyyyy)
+  return date.getFullYear()
+}
+
+// find the numeric month from a date string returned as a number
+export function getMonthFromDateString(mmddyyyy: string): number {
+  const date: Date = new Date(mmddyyyy)
+  return date.getMonth()
+}
+
+// find the day from a date string returned as a number
+export function getDayFromDateString(mmddyyyy: string): number {
+  const date: Date = new Date(mmddyyyy)
+  return date.getDay()
+}
+
+// composes a string which will read as [locale month name] [day], [year]
+// provides a more human readable form of a mm-dd-yyyy string
+export function getFormalDateFromString(mmddyyyy: string): string {
+  return `${getLocaleMonthFromDateString(mmddyyyy)} ${getDayFromDateString(
+    mmddyyyy
+  )}, ${getYearFromDateString(mmddyyyy)}`
 }

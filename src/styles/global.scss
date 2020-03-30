@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap");
 @import "~styles/colors";
+@import "~styles/mixins";
 @import "~styles/themes";
 
 :root {
@@ -45,12 +46,10 @@ h6 {
 }
 
 h5 {
-  margin-block-end: 0.75rem;
   line-height: 1.5;
   font-size: 1rem;
 }
 h6 {
-  margin-block-end: 0.75rem;
   line-height: 1.5;
   font-size: 1rem;
 }
@@ -61,42 +60,28 @@ a,
 dd,
 dt,
 li {
-  font-weight: 300;
+  font-weight: 400;
   font-size: inherit;
   line-height: 1.4;
 }
 
 a {
   color: color(--color-primary);
-  position: relative;
-  z-index: 1;
   text-decoration: none;
   font-style: normal;
   font-weight: 400;
   padding: 0 0.25rem;
-
-  &:before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -0.25rem;
-    width: 100%;
-    height: 30%;
-    background: color(--color-primary);
-    z-index: -1;
-    opacity: 0.25;
-    transition: height 0.4s cubic-bezier(0, 0.75, 0.66, 1);
-  }
-
+  cursor: pointer;
+  // underline animation effect
+  transition-property: color, background-image, background-size;
+  transition-duration: 0.25s;
+  transition-timing-function: ease, ease, cubic-bezier(0, 0.75, 0.66, 1);
+  // mixin to apply underline properties
+  @include anchor-underline();
+  // pseudo-selector change of color
   &:hover,
   &:focus {
-    outline: none;
     color: color(--color-highlight);
-    transition: color 0.2s ease;
-    &:before {
-      background: color(--color-highlight);
-      height: calc(100% + 0.5rem);
-    }
   }
 }
 

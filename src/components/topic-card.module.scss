@@ -1,4 +1,5 @@
 @import "~styles/colors";
+@import "~styles/mixins";
 @import "~styles/themes";
 
 .topic-card {
@@ -11,7 +12,6 @@
   box-sizing: border-box;
   background: color(--color-light);
   position: relative;
-  cursor: pointer;
   // grid layout
   display: grid;
   align-items: center;
@@ -46,17 +46,12 @@
   color: color(--color-dark);
   font-weight: 400;
   text-transform: capitalize;
-  margin: 0;
-  a {
-    font-size: inherit;
-  }
 }
 
 .subtitle {
   grid-area: subtitle;
   color: color(--color-dark1);
   font-weight: 300;
-  margin: 0;
 }
 
 .vertical-rule {
@@ -66,14 +61,14 @@
   background: color(--color-light1);
   width: 2px;
   z-index: 1;
-  left: 2.75rem;
+  left: 2.5rem;
 }
 
 .day-of-the-month {
   grid-area: day;
   border-radius: 100%;
-  width: 3rem;
-  height: 3rem;
+  width: 2.5rem;
+  height: 2.5rem;
   color: color(--color-dark);
   font-weight: 400;
   display: flex;
@@ -101,4 +96,8 @@
 .tag {
   margin-right: 0.5rem;
   margin-bottom: 0.5rem;
+}
+
+.article-link {
+  @include anchor-with-icon(right);
 }

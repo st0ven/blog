@@ -1,9 +1,6 @@
 import React from "react"
 import { TopicCard } from "~components/topic-card"
-import {
-  ChronologicalArticleGroup,
-  monthsMappedByIndex,
-} from "~resources/chronology"
+import { ChronologicalArticleGroup } from "~resources/chronology"
 import styles from "~components/article-group.module.scss"
 
 export function ArticleGroup({
@@ -13,8 +10,8 @@ export function ArticleGroup({
 }: ChronologicalArticleGroup) {
   return (
     <div className={styles.articleGroup}>
-      <h3 className={styles.title}>{monthsMappedByIndex[Number(month)]}</h3>
-      <h6 className={styles.subtitle}>{year}</h6>
+      <h3 className={styles.month}>{month}</h3>
+      <h6 className={styles.year}>{year}</h6>
       <ul className={styles.topics}>
         {articles.map((node: any) => (
           <li className={styles.topic} key={node._meta.uid}>

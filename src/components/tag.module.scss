@@ -1,4 +1,5 @@
 @import "~styles/colors";
+@import "~styles/themes";
 
 .tag {
   padding: 0.5rem 1.2rem;
@@ -13,4 +14,7 @@
   font-weight: 400;
   text-transform: lowercase;
   white-space: nowrap;
+  @include theme(light) {
+    background: color(--color-secondary, 0.12);
+  }
 }

@@ -1,0 +1,64 @@
+@import "~styles/colors";
+@import "~styles/mixins";
+@import "~styles/themes";
+
+.container {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto 1fr auto;
+  justify-items: center;
+  align-items: center;
+  width: 100%;
+  margin: 1em 0;
+}
+
+blockquote {
+  position: relative;
+  color: color(--color-light1);
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 1.7;
+  padding: 1rem 1.25rem;
+  background: color(--color-dark1);
+  margin: 0;
+  border-radius: 0.25rem;
+  border-width: 0;
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.marker {
+  // shape
+  position: relative;
+  z-index: 2;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: color(--color-light2);
+  border-radius: 100%;
+  // font style
+  color: color(--color-dark1);
+  font-weight: 400;
+  font-size: 2.5rem;
+  font-style: normal;
+  line-height: 1;
+  vertical-align: baseline;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: -1.25rem;
+  display: none;
+  // centering
+  // theme specific alternates
+  @include theme(light) {
+    background: color(--color-light);
+    box-shadow: 0 0.33rem 0.5rem color(--color-dark, 0.08);
+  }
+
+  &.bottom {
+    margin-bottom: 0;
+    margin-top: -1.25rem;
+  }
+}

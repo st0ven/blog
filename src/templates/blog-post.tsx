@@ -1,10 +1,13 @@
 import React from "react"
 import Layout from "~components/layout"
+import hljs from "highlight.js"
 import { graphql } from "gatsby"
 import { navigate } from "@reach/router"
 import { RichText } from "prismic-reactjs"
+import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
 import { ArrowLeftCircle } from "react-feather"
+import { getFormalDateFromString } from "~resources/chronology"
 
 import styles from "~templates/blog-post.module.scss"
 
@@ -12,18 +15,31 @@ function navigateToArticles() {
   navigate("/")
 }
 
+function renderBodyContent(body: Array<any>) {
+  return body.map((slice: any, index: number) => {
+    const key: string = `${slice.type}-${index}`
+    switch (slice.type) {
+      case "article_content":
+        return <RichText render={slice.primary.rich_text} key={key} />
+        break
+      case "blockquote":
+        //return <blockquote>&ldquo;{slice.primary.text}&rdquo;</blockquote>
+        return <Blockquote text={slice.primary.text} key={key} />
+        break
+      case "horizontal_rule":
+        return <hr className={styles.horizontalRule} key={key} />
+        break
+    }
+  })
+}
+
 export default ({ data, pageContext }: any) => {
   const { node }: any = data.prismic.allBlog_articles.edges[0]
-  console.log(pageContext)
-  console.log(node.body)
+  const dateString: string = getFormalDateFromString(node.authored_date)
   return (
     <Layout>
       <article className={styles.article}>
-        <a
-          href="#"
-          className={styles.linkWithIcon}
-          onClick={navigateToArticles}
-        >
+        <a className={styles.returnLink} onClick={navigateToArticles}>
           <ArrowLeftCircle className={styles.icon} />
           Other articles
         </a>
@@ -32,13 +48,11 @@ export default ({ data, pageContext }: any) => {
           <h1 className={styles.title}>{RichText.asText(node.title)}</h1>
           <h2 className={styles.subtitle}>{RichText.asText(node.subtitle)}</h2>
           <div className={styles.publishedDate}>
-            <PublishedDate date={node.authored_date} />
+            <PublishedDate date={dateString} />
           </div>
         </header>
         <hr className={styles.horizontalRule} />
-        <section>
-          <RichText render={node.body[0].primary.rich_text} />
-        </section>
+        <section>{renderBodyContent(node.body)}</section>
       </article>
     </Layout>
   )
@@ -61,9 +75,15 @@ export const query = graphql`
                   rich_text
                 }
               }
-              ... on PRISMIC_Blog_articleBodyBanner {
+              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
                 type
                 label
+              }
+              ... on PRISMIC_Blog_articleBodyBlockquote {
+                type
+                primary {
+                  text
+                }
               }
               ... on PRISMIC_Blog_articleBodyMedia {
                 type

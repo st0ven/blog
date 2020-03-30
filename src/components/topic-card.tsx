@@ -11,6 +11,7 @@ on the content or some clear CTA should link out to the content
 as a dedicated route/link to view the full content.
 */
 import React, { useCallback } from "react"
+import { ArrowRightCircle } from "react-feather"
 import { navigate } from "@reach/router"
 import { RichText } from "prismic-reactjs"
 import { Tag } from "~components/tag"
@@ -74,14 +75,17 @@ export function TopicCard({
     redirectHandler(slug)
   }, [slug])
   return (
-    <aside className={styles.topicCard} onClick={handleNavigation}>
+    <aside className={styles.topicCard}>
       <div className={styles.verticalRule}></div>
       <div className={styles.dayOfTheMonth}>
         {extractDayFromDateString(date)}
       </div>
       {/* right column - Will hold text content */}
       <h5 className={styles.title}>
+        <a className={styles.articleLink} onClick={handleNavigation}>
           {RichText.asText(title)}
+          <ArrowRightCircle className={styles.icon}/>
+        </a>
       </h5>
       <h6 className={styles.subtitle}>{RichText.asText(subtitle)}</h6>
       {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
