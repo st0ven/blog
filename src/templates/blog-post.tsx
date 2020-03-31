@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import { navigate } from "@reach/router"
 import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
@@ -10,10 +10,6 @@ import { ArrowLeftCircle } from "react-feather"
 import { getFormalDateFromString } from "~resources/chronology"
 
 import styles from "~templates/blog-post.module.scss"
-
-function navigateToArticles() {
-  navigate("/")
-}
 
 function renderBodyContent(body: Array<any>) {
   return body.map((slice: any, index: number) => {
@@ -39,10 +35,10 @@ export default ({ data, pageContext }: any) => {
   return (
     <Layout>
       <article className={styles.article}>
-        <a className={styles.returnLink} onClick={navigateToArticles}>
+        <Link className={styles.returnLink} to="/">
           <ArrowLeftCircle className={styles.icon} />
           Other articles
-        </a>
+        </Link>
         <hr className={styles.horizontalRule} />
         <header className={styles.header}>
           <h1 className={styles.title}>{RichText.asText(node.title)}</h1>

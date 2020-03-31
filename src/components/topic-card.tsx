@@ -11,8 +11,10 @@ on the content or some clear CTA should link out to the content
 as a dedicated route/link to view the full content.
 */
 import React, { useCallback } from "react"
+import cx from "classnames"
 import { ArrowRightCircle } from "react-feather"
 import { navigate } from "@reach/router"
+import { Link } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { Tag } from "~components/tag"
 
@@ -82,10 +84,10 @@ export function TopicCard({
       </div>
       {/* right column - Will hold text content */}
       <h5 className={styles.title}>
-        <a className={styles.articleLink} onClick={handleNavigation}>
+        <Link to={slug} className={styles.articleLink}>
           {RichText.asText(title)}
-          <ArrowRightCircle className={styles.icon}/>
-        </a>
+          <ArrowRightCircle className={styles.icon} />
+        </Link>
       </h5>
       <h6 className={styles.subtitle}>{RichText.asText(subtitle)}</h6>
       {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}

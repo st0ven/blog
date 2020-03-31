@@ -22,6 +22,7 @@
   );
   &:hover,
   &:focus {
+    outline: none;
     background-size: 1rem 250%;
     background-image: linear-gradient(
       to top,

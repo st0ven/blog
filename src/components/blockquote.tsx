@@ -9,9 +9,7 @@ interface BlockquoteProps {
 export function Blockquote({ text }: BlockquoteProps) {
   return (
     <div className={styles.container}>
-      <span className={styles.marker}>&ldquo;</span>
       <blockquote>&ldquo;{text}&rdquo;</blockquote>
-      <span className={cx(styles.marker, styles.bottom)}>&rdquo;</span>
     </div>
   )
 }

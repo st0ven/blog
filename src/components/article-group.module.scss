@@ -28,7 +28,7 @@
   grid-template-rows: auto;
   grid-template-columns: 1fr;
   @include breakpoint(x-large) {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
   }
 }
 

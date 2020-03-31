@@ -28,37 +28,3 @@ blockquote {
   width: 100%;
   box-sizing: border-box;
 }
-
-.marker {
-  // shape
-  position: relative;
-  z-index: 2;
-  width: 2.5rem;
-  height: 2.5rem;
-  background: color(--color-light2);
-  border-radius: 100%;
-  // font style
-  color: color(--color-dark1);
-  font-weight: 400;
-  font-size: 2.5rem;
-  font-style: normal;
-  line-height: 1;
-  vertical-align: baseline;
-  text-align: center;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: -1.25rem;
-  display: none;
-  // centering
-  // theme specific alternates
-  @include theme(light) {
-    background: color(--color-light);
-    box-shadow: 0 0.33rem 0.5rem color(--color-dark, 0.08);
-  }
-
-  &.bottom {
-    margin-bottom: 0;
-    margin-top: -1.25rem;
-  }
-}

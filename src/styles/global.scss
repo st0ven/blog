@@ -94,3 +94,11 @@ dd {
   position: relative;
   margin: 0;
 }
+
+.embed {
+  img {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+  }
+}
