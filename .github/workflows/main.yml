@@ -21,6 +21,6 @@ jobs:
           email: 'steve.seator@email.com' # Not required, default to action's maintainer
           node-version: ${{ matrix.node-version }}
       - run: npm install
-      - run: gatsby build
+      - run: npm run build
       env:
         CI: true
