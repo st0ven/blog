@@ -10,9 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with: 
-          ref: gh-pages
-          path: master
+        with:
           persist-credientials: false
           token: ${{ secrets.ACCESS_TOKEN }}
           
