@@ -9,7 +9,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
+        with: 
+          ref: gh-pages
+          path: master
+          persist-credientials: false
+          token: ${{ secrets.ACCESS_TOKEN }}
+          
       - run: |
           npm install
           npm run build
+        env:
+          PRISMIC_API_KEY: ${{ secrets.PRISMIC_API_KEY }}
