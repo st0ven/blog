@@ -3,7 +3,7 @@ name: 'update blog' # Name of your workflow
 on:
   push:
     branches:
-      - gatsby-dev # The trigger of the this workflow
+      - master # The trigger of the this workflow
 
 jobs:
   build:
@@ -12,15 +12,19 @@ jobs:
       matrix: 
         node-version: [8.x, 10.x, 12.x]
     steps:
-      - uses: actions/checkout@v1 # Checkout your triggered branch
-      - uses: xmflsct/action-publish-gatsby@v1 # Uses this action to run further steps
-        with:
-          publishBranch: 'master' # Not required, default publishing branch is master
-          token: ${{ secrets.GITHUB_TOKEN }} # Your personal access token of GitHub, read more below of how to obtain one and keep it safe
-          name: 'Steve Seator' # Not required, default to action's maintainer
-          email: 'steve.seator@email.com' # Not required, default to action's maintainer
-          node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run build --if-present
-      env:
-        CI: true
+      - name: Checkout
+        uses: actions/checkout@v1 # Checkout your triggered branch
+        with: 
+          persist-credentials: false
+
+      - name: Install
+        run: npm install
+
+      - name: Build
+        run: npm run build
+        env: 
+          GATSBY_ENV: "prod"
+
+      - name: Deploy
+        run: docker-compose run deploy
+        
