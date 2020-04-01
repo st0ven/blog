@@ -10,6 +10,8 @@ jobs:
     runs-on: ubuntu-latest # Action uses Docker so only Linux is supported
     steps:
       - uses: actions/checkout@v1 # Checkout your triggered branch
+        with:
+          path: ""
       - uses: xmflsct/action-publish-gatsby@v1 # Uses this action to run further steps
         with:
           publishBranch: 'master' # Not required, default publishing branch is master
