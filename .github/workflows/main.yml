@@ -11,8 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v1
       - uses: enriikke/gatsby-gh-pages-action@v2
-        env:
-          PRISMIC_API_KEY: ${{ secrets.PRISMIC_API_KEY }}
         with:
           access-token: ${{ secrets.ACCESS_KEY }}
           
