@@ -17,11 +17,7 @@ jobs:
 
       - name: Build
         env:
-          GH_API_KEY: ${{secrets.PERSONAL_KEY}}
-        run: npm run build
-
-      - name: deploy
-        env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           PRISMIC_API_KEY: ${{secrets.PRISMIC_API_KEY}}
           BUILD_DIR: "public/"
+        run: npm run build
