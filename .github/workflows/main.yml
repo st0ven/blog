@@ -3,7 +3,7 @@ name: 'update blog' # Name of your workflow
 on:
   push:
     branches:
-      - master # The trigger of the this workflow
+      - gatsby-dev # The trigger of the this workflow
 
 jobs:
   build:
@@ -12,10 +12,7 @@ jobs:
       matrix: 
         node-version: [8.x, 10.x, 12.x]
     steps:
-      - name: Checkout
-        uses: actions/checkout@v1 # Checkout your triggered branch
-        with: 
-          persist-credentials: false
+      - uses: actions/checkout@v1 # Checkout your triggered branch
 
       - name: Install
         run: npm install
@@ -24,7 +21,6 @@ jobs:
         run: npm run build
         env: 
           GATSBY_ENV: "prod"
+          PRISMIC_API_KEY: ${{secrets.PRISMIC_API_KEY}}
 
-      - name: Deploy
-        run: docker-compose run deploy
         
