@@ -1,4 +1,4 @@
-name: 'update blog' # Name of your workflow
+name: "update blog" # Name of your workflow
 
 on:
   push:
@@ -8,8 +8,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest # Action uses Docker so only Linux is supported
-    strategy: 
-      matrix: 
+    strategy:
+      matrix:
         node-version: [8.x, 10.x, 12.x]
     steps:
       - uses: actions/checkout@v1 # Checkout your triggered branch
@@ -18,9 +18,13 @@ jobs:
         run: npm install
 
       - name: Build
+        env:
+          GH_API_KEY: ${{secrets.PERSONAL_KEY}}
         run: npm run build
-        env: 
-          GATSBY_ENV: "prod"
-          PRISMIC_API_KEY: ${{secrets.PRISMIC_API_KEY}}
 
-        
+      - name: deploy
+        uses: st0ven/ghpages@v0.2.1
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+          PRISMIC_API_KEY: ${{secrets.PRISMIC_API_KEY}}
+          BUILD_DIR: "public/"
