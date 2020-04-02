@@ -68,7 +68,7 @@ export function TopicCard({
   title,
   subtitle,
   date,
-  tags, 
+  tags,
   media,
 }: TopicCardProps) {
   const slug: string = buildSlug(title)
