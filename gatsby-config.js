@@ -1,10 +1,10 @@
 // node imports
-const path = require("path");
+const path = require("path")
 
 // enable environment variables with dotenv package
-require('dotenv').config({
-  path:  `.env.${process.env.NODE_ENV}`,
-});
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
 
 module.exports = {
   siteMetadata: {
@@ -51,23 +51,41 @@ module.exports = {
     {
       resolve: `gatsby-source-prismic-graphql`,
       options: {
-        repositoryName: 'uxblog',
-        accessToken: `${process.env.PRISMIC_API_KEY}`
-      }
+        repositoryName: "uxblog",
+        accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+        /*
+        pages: [{
+          type: 'Blog_article',
+          match: `uxblog/articles/:uid`,
+          path: 'uxblog/articles/',
+          component: require.resolve('./src/templates/blog-post.tsx'),
+          sortBy: 'date_ASC'
+        }]
+        */
+      },
     },
     // alias support
     {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
-          "~components": path.resolve(__dirname, 'src/components'),
+          "~components": path.resolve(__dirname, "src/components"),
           "~pages": path.resolve(__dirname, "src/pages"),
           "~resources": path.resolve(__dirname, "src/resources"),
           "~styles": path.resolve(__dirname, "src/styles"),
           "~templates": path.resolve(__dirname, "src/templates"),
         },
-        extensions: ['js', 'jsx', 'ts', 'tsx', 'scss', 'sass', 'module.scss', 'module.sass']
-      }
+        extensions: [
+          "js",
+          "jsx",
+          "ts",
+          "tsx",
+          "scss",
+          "sass",
+          "module.scss",
+          "module.sass",
+        ],
+      },
     },
     // emotion css-in-js support
     `gatsby-plugin-emotion`,

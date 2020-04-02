@@ -6,7 +6,10 @@
 
 // You can delete this file if you're not using it
 const path = require("path")
-const {buildSlug} = require(path.resolve(__dirname, "src/resources/post-builder.js"));
+const { buildSlug } = require(path.resolve(
+  __dirname,
+  "src/resources/post-builder.js"
+))
 
 exports.onCreateNode = ({ actions }) => {
   actions.setWebpackConfig({
@@ -37,8 +40,8 @@ exports.createPages = async function({ actions, graphql }) {
   `)
   // iterate through data from prismic graph call and create gatsby pages
   data.prismic.allBlog_articles.edges.forEach(edge => {
-    const {title, _meta } = edge.node
-    const slug = buildSlug(title);
+    const { title, _meta } = edge.node
+    const slug = buildSlug(title)
     // create pages for each post and pass useful contextual attributes
     actions.createPage({
       path: slug,

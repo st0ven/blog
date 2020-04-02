@@ -73,9 +73,6 @@ export function TopicCard({
   uid,
 }: TopicCardProps) {
   const slug: string = buildSlug(title)
-  const handleNavigation = useCallback(() => {
-    redirectHandler(slug)
-  }, [slug])
   return (
     <aside className={styles.topicCard}>
       <div className={styles.verticalRule}></div>
