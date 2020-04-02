@@ -1,0 +1,104 @@
+@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap");
+@import "~styles/colors";
+@import "~styles/mixins";
+@import "~styles/themes";
+
+:root {
+  font-size: 18px;
+
+  /* default theme */
+  @include map-css-vars-by-theme("dark");
+
+  /* prefers light theme */
+  @include theme("light") {
+    @include map-css-vars-by-theme("light");
+  }
+}
+
+html,
+body {
+  position: relative;
+  height: auto;
+  min-height: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: Inter, sans-serif;
+  color: color(--color-light);
+}
+
+body {
+  background-color: color(--color-light1);
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+}
+
+h5 {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+h6 {
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+p,
+span,
+a,
+dd,
+dt,
+li {
+  font-weight: 400;
+  font-size: inherit;
+  line-height: 1.4;
+}
+
+a {
+  color: color(--color-primary);
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  padding: 0 0.25rem;
+  cursor: pointer;
+  // underline animation effect
+  transition-property: color, background-image, background-size;
+  transition-duration: 0.25s;
+  transition-timing-function: ease, ease, cubic-bezier(0, 0.75, 0.66, 1);
+  // mixin to apply underline properties
+  @include anchor-underline();
+  // pseudo-selector change of color
+  &:hover,
+  &:focus {
+    color: color(--color-highlight);
+  }
+}
+
+dt,
+dd {
+  margin: 0;
+}
+
+.__gatsby {
+  position: relative;
+  margin: 0;
+}
+
+.embed {
+  img {
+    position: relative;
+    max-width: 100%;
+    height: auto;
+  }
+}

@@ -1,0 +1,28 @@
+/* color definitions */
+$colors: (
+  black: #0b0b10,
+  gray900: #13141b,
+  gray800: #23262f,
+  gray600: #6e7581,
+  gray400: #9197a2,
+  gray200: #d1d3d8,
+  gray100: #f0f1f3,
+  white: #ffffff,
+  violet: #3208c9,
+  maroon: #9e0322,
+  rose: #f76fb2,
+  tangerine: #ff9a52,
+  teal: #20e1e3,
+  yellow: #ffd445,
+  magenta: #a34500,
+);
+
+/* return a Sass color in rgb form for easy reference and manipulation */
+@function color($cssVar, $opacity: 1) {
+  @return rgba(var($cssVar), $opacity);
+}
+
+/* takes a Sass color and returns primaries */
+@function get-primaries-from-color($sass-color) {
+  @return red($sass-color), green($sass-color), blue($sass-color);
+}

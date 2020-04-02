@@ -1,0 +1,29 @@
+$breakpoints: (
+  breakpoint-1: 480px,
+  breakpoint-2: 720px,
+  breakpoint-3: 960px,
+  breakpoint-4: 1200px,
+);
+
+@mixin breakpoint($size) {
+  @if ($size == "medium") {
+    @media screen and (min-width: #{map-get($breakpoints, "breakpoint-1")}) {
+      @content;
+    }
+  }
+  @if ($size == "large") {
+    @media screen and (min-width: #{map-get($breakpoints, "breakpoint-2")}) {
+      @content;
+    }
+  }
+  @if ($size == "x-large") {
+    @media screen and (min-width: #{map-get($breakpoints, "breakpoint-3")}) {
+      @content;
+    }
+  }
+  @if ($size == "hd") {
+    @media screen and (max-width: #{map-get($breakpoints, "breakpoint-4")}) {
+      @content;
+    }
+  }
+}

@@ -1,0 +1,103 @@
+@import "~styles/colors";
+@import "~styles/mixins";
+@import "~styles/themes";
+
+.topic-card {
+  box-sizing: border-box;
+  border-style: solid;
+  border-width: 0px;
+  border-radius: 2px;
+  border-color: color(--color-light2);
+  padding: 1.25rem;
+  box-sizing: border-box;
+  background: color(--color-light);
+  position: relative;
+  // grid layout
+  display: grid;
+  align-items: center;
+  grid-column-gap: 1.25rem;
+  grid-row-gap: 0.5rem;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "day title"
+    ". subtitle"
+    ". tags";
+
+  &:before {
+    content: "";
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: calc(100% - 1rem);
+    height: 2rem;
+    position: absolute;
+    z-index: -1;
+    bottom: 0;
+    left: 0;
+    margin-left: 0.5rem;
+    filter: blur(0.33rem);
+    background-color: color(--color-light1);
+    opacity: 0.15;
+  }
+}
+
+.title {
+  grid-area: title;
+  color: color(--color-dark);
+  font-weight: 400;
+  text-transform: capitalize;
+}
+
+.subtitle {
+  grid-area: subtitle;
+  color: color(--color-dark1);
+  font-weight: 300;
+}
+
+.vertical-rule {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  background: color(--color-light1);
+  width: 2px;
+  z-index: 1;
+  left: 2.5rem;
+}
+
+.day-of-the-month {
+  grid-area: day;
+  border-radius: 100%;
+  width: 2.5rem;
+  height: 2.5rem;
+  color: color(--color-dark);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  background: color(--color-light);
+  box-shadow: 0 0.33rem 0.5rem color(--color-dark, 0.15);
+  position: relative;
+  z-index: 2;
+  @include theme(dark) {
+    background: color(--color-light2);
+    box-shadow: none;
+  }
+}
+
+.tags {
+  grid-area: tags;
+  position: relative;
+  padding-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.tag {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.article-link {
+  @include anchor-with-icon(right);
+}
