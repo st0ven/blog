@@ -70,7 +70,6 @@ export function TopicCard({
   date,
   tags,
   media,
-  uid,
 }: TopicCardProps) {
   const slug: string = buildSlug(title)
   return (
