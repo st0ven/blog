@@ -13,9 +13,9 @@ jobs:
         with:
           persist-credientials: false
           token: ${{ secrets.ACCESS_TOKEN }}
-          
-      - run: |
-          npm install
-          npm run deploy
-        env:
-          PRISMIC_API_KEY: ${{ secrets.PRISMIC_API_KEY }}
+
+      - uses: enriikke/gatsby-gh-pages-action@v2
+        with: 
+          access-token: ${{ secrets.ACCESS_TOKEN }}
+          deploy-branch: gh-pages
+          gatsby-args: --prefix-paths
