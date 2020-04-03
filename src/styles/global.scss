@@ -6,15 +6,13 @@
 
 :root {
   font-size: 16px;
-
   /* default theme */
   @include map-css-vars-by-theme("dark");
-
   /* prefers light theme */
   @include theme("light") {
     @include map-css-vars-by-theme("light");
   }
-
+  /* increase font size on desktop */
   @include breakpoint(large){
     font-size: 18px;
   }
