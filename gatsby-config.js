@@ -8,7 +8,7 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: ``,
     description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
     author: `@gatsbyjs`,
   },
@@ -52,7 +52,8 @@ module.exports = {
       resolve: `gatsby-source-prismic-graphql`,
       options: {
         repositoryName: "uxblog",
-        accessToken: process.env.PRISMIC_ACCESS_TOKEN,
+        // no longer necessary as it has been made public for master access
+        // accessToken: process.env.PRISMIC_ACCESS_TOKEN,
         /*
         pages: [{
           type: 'Blog_article',

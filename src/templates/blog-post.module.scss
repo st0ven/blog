@@ -1,6 +1,7 @@
 @import "~styles/mixins";
 @import "~styles/colors";
 @import "~styles/queries";
+@import "~styles/units";
 
 .article {
   display: block;
@@ -30,7 +31,7 @@
   font-size: 1.2rem;
   font-weight: 400;
   position: relative;
-  padding: 0.25rem 0;
+  padding: $unit-size-sub 0;
   padding-left: 1.25rem;
   padding-left: 0;
 
@@ -46,20 +47,21 @@
   }
 }
 
-h3 {
+.section-title {
   font-size: 1.375rem;
   font-weight: 500;
   text-transform: capitalize;
   color: color(--color-dark);
+  @include css-underline($unit-size-sub, --color-dark1);
 }
 
 img {
-  border-radius: 0.25rem;
+  border-radius: $unit-size-sub;
   overflow: hidden;
 }
 
 .horizontal-rule {
-  @include divider;
+  @include horizontal-rule;
 }
 
 .return-link {
@@ -67,7 +69,7 @@ img {
 }
 
 .published-date {
-  margin-top: 1rem;
+  margin-top: $unit-size-small;
 }
 
 .embed {

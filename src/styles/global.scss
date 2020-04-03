@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap");
 @import "~styles/colors";
 @import "~styles/mixins";
+@import "~styles/queries";
 @import "~styles/themes";
 
 :root {
-  font-size: 18px;
+  font-size: 16px;
 
   /* default theme */
   @include map-css-vars-by-theme("dark");
@@ -12,6 +13,10 @@
   /* prefers light theme */
   @include theme("light") {
     @include map-css-vars-by-theme("light");
+  }
+
+  @include breakpoint(large){
+    font-size: 18px;
   }
 }
 

@@ -18,8 +18,12 @@ function renderBodyContent(body: Array<any>) {
       case "article_content":
         return <RichText render={slice.primary.rich_text} key={key} />
         break
+      case "section_title":
+        return <h3 className={styles.sectionTitle} key={key}>
+          {RichText.asText(slice.primary.section_title)}
+        </h3>
+        break
       case "blockquote":
-        //return <blockquote>&ldquo;{slice.primary.text}&rdquo;</blockquote>
         return <Blockquote text={slice.primary.text} key={key} />
         break
       case "horizontal_rule":
@@ -71,19 +75,30 @@ export const query = graphql`
                   rich_text
                 }
               }
-              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
+              ... on PRISMIC_Blog_articleBodyMedia {
                 type
                 label
+                fields {
+                  thumbnail
+                }
               }
               ... on PRISMIC_Blog_articleBodyBlockquote {
                 type
+                label
                 primary {
                   text
                 }
               }
-              ... on PRISMIC_Blog_articleBodyMedia {
+              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
                 type
                 label
+              }
+              ... on PRISMIC_Blog_articleBodySection_title {
+                type
+                label
+                primary {
+                  section_title
+                }
               }
             }
           }

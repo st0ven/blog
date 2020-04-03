@@ -23,7 +23,7 @@ function renderChronologicalArticleGroups(
   return chronologicalArticles.current.map(
     (articleGroup: ChronologicalArticleGroup, index: number) => (
       <section key={`${articleGroup.year}-${articleGroup.month}`}>
-        {index ? <hr className={styles.divider} /> : null}
+        {index ? <hr /> : null}
         <ArticleGroup {...articleGroup} />
       </section>
     )
@@ -58,8 +58,10 @@ export const postsQuery = graphql`
             authored_date
             body {
               ... on PRISMIC_Blog_articleBodyMedia {
+                type
+                label
                 fields {
-                  related_media
+                  thumbnail
                 }
               }
             }
