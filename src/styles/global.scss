@@ -6,15 +6,13 @@
 
 :root {
   font-size: 16px;
-
   /* default theme */
   @include map-css-vars-by-theme("dark");
-
   /* prefers light theme */
   @include theme("light") {
     @include map-css-vars-by-theme("light");
   }
-
+  /* increase font size on desktop */
   @include breakpoint(large){
     font-size: 18px;
   }
@@ -34,9 +32,12 @@ body {
   color: color(--color-light);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: color(--color-light1);
-  font-size: 1rem;
 }
 
 h1,
@@ -66,7 +67,6 @@ dd,
 dt,
 li {
   font-weight: 400;
-  font-size: inherit;
   line-height: 1.4;
 }
 
