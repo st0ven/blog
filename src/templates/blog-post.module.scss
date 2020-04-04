@@ -28,7 +28,7 @@
 
 .subtitle {
   color: color(--color-dark1);
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-weight: 400;
   position: relative;
   padding: $unit-size-sub 0;
@@ -64,12 +64,12 @@ img {
   @include horizontal-rule;
 }
 
-.return-link {
+.article-nav-link {
   @include anchor-with-icon(left);
 }
 
 .published-date {
-  margin-top: $unit-size-small;
+  margin-top: $unit-size-medium;
 }
 
 .embed {

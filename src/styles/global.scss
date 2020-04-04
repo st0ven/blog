@@ -32,9 +32,12 @@ body {
   color: color(--color-light);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background-color: color(--color-light1);
-  font-size: 1rem;
 }
 
 h1,
@@ -64,7 +67,6 @@ dd,
 dt,
 li {
   font-weight: 400;
-  font-size: inherit;
   line-height: 1.4;
 }
 
