@@ -13,7 +13,7 @@ export function PublishedDate({
   return (
     <dl className={styles.dateBox}>
       <dt className={styles.title}>{title}</dt>
-      <dd className={styles.value}>{date}</dd>
+      <dd className={styles.date}>{date}</dd>
     </dl>
   )
 }

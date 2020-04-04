@@ -69,24 +69,13 @@
 }
 
 @mixin horizontal-rule($color: --color-light2) {
-  background: linear-gradient(
-    to right,
-    color($color) $unit-size-small,
-    transparent $unit-size-small
-  );
-  background-size: $unit-size-small * 1.5 auto;
-  background-repeat: repeat-x;
+  background: color($color);
   width: 100%;
   max-height: none;
-  height: $unit-size-base;
-  border-style: solid;
-  border-color: transparent;
+  height: $unit-size-sub;
   border: none;
   opacity: 0.5;
-  margin: $unit-size-small 0;
-  @include breakpoint(medium) {
-    margin: $unit-size-medium 0;
-  }
+  margin: $unit-size-medium 0;
   @include breakpoint(large) {
     margin: $unit-size-large 0;
   }
