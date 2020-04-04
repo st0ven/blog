@@ -22,7 +22,7 @@ $breakpoints: (
     }
   }
   @if ($size == "hd") {
-    @media screen and (max-width: #{map-get($breakpoints, "breakpoint-4")}) {
+    @media screen and (min-width: #{map-get($breakpoints, "breakpoint-4")}) {
       @content;
     }
   }

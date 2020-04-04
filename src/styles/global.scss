@@ -16,6 +16,9 @@
   @include breakpoint(large){
     font-size: 18px;
   }
+  @include breakpoint(hd){
+    font-size: 20px;
+  }
 }
 
 html,
@@ -68,7 +71,6 @@ dt,
 li,
 dt,
 dd {
-  font-size: 1rem;
   font-weight: 400;
   line-height: 1.4;
 }
