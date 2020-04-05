@@ -10,7 +10,7 @@ $theme-map: (
     --color-light: map-get($colors, black),
     --color-primary: map-get($colors, lilac),
     --color-secondary: map-get($colors, tangerine),
-    --color-highlight: map-get($colors, teal)
+    --color-highlight: map-get($colors, yellow)
   ),
   light: (
     --color-dark: map-get($colors, black),

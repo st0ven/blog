@@ -1,51 +1,30 @@
 @import "~styles/queries";
+@import "~styles/themes";
 @import "~styles/units";
 
 @mixin anchor-underline($color: --color-primary) {
-  display: inline-block;
-  background-repeat: repeat-x;
-  background-position: 0 100%;
-  background-size: 1rem 100%;
-  // background image in dark mode for underline effect
-  background-image: linear-gradient(
+  transition: none;
+  display: inline;
+  outline: none;
+  color: color($color);
+  padding: 0 0 $unit-size-sub;
+  background: linear-gradient(
     to top,
-    color($color, 0.25) 40%,
-    transparent 40%
+    color($color, 1) 1px,
+    transparent 1px
   );
+
   &:hover,
   &:focus {
-    outline: none;
-    background-size: 1rem 250%;
-    background-image: linear-gradient(
+    background: linear-gradient(
       to top,
-      color(--color-highlight, 0.25) 40%,
-      transparent 40%
+      color(--color-highlight, 1) 1px,
+      transparent 1px
     );
-  }
-  // background image in light mode for underline effect
-  // requires a different opacity for best legibility
-  @include theme(light) {
-    background-image: linear-gradient(
-      to top,
-      color($color, 0.16) 40%,
-      transparent 40%
-    );
-    &:hover,
-    &:focus {
-      background-image: linear-gradient(
-        to top,
-        color(--color-highlight, 0.16) 40%,
-        transparent 40%
-      );
-    }
   }
 }
 
 @mixin anchor-with-icon($align: left) {
-  position: relative;
-  display: inline;
-  align-items: center;
-  // internal icon class
   .icon {
     position: relative;
     transform: translateY(25%);

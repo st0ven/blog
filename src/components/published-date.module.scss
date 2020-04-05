@@ -1,14 +1,19 @@
 @import "~styles/colors";
+@import "~styles/units";
 
 .date-box {
-  margin: 0;
-  padding: 0rem;
   color: color(--color-dark);
   text-transform: capitalize;
-  display: inline-grid;
-  row-gap: 0.125rem;
+  /*
+  border-width: 0;
+  border-left-width: $unit-size-sub;
+  border-style: solid;
+  border-color: color(--color-dark1);
+  padding-left: $unit-size-medium;
+  */
 }
 
-.date {
-  color: color(--color-dark1);
+.title {
+  color: color(--color-dark);
+  font-weight: 600;
 }

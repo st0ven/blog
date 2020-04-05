@@ -1,6 +1,7 @@
 @import "~styles/colors";
 @import "~styles/mixins";
 @import "~styles/themes";
+@import "~styles/units";
 
 .container {
   display: grid;
@@ -10,16 +11,20 @@
   align-items: center;
   width: 100%;
   margin: 1em 0;
+  border-width: 0;
+  border-style: solid;
+  border-color: color(--color-secondary);
+  border-left-width: $unit-size-sub;
 }
 
 blockquote {
   position: relative;
-  color: color(--color-light1);
-  font-weight: 400;
+  color: color(--color-secondary);
   font-style: italic;
-  line-height: 1.7;
-  padding: 1rem 1.25rem;
-  background: color(--color-dark1);
+  font-weight: 600;
+  line-height: 1.75;
+  padding: $unit-size-small $unit-size-medium;
+  background: color(--color-light);
   margin: 0;
   border-radius: 0.25rem;
   border-width: 0;
