@@ -4,8 +4,10 @@
 @import "~styles/queries";
 @import "~styles/themes";
 
+$root-font-size: 16px;
+
 :root {
-  font-size: 16px;
+  font-size: $root-font-size;
   /* default theme */
   @include map-css-vars-by-theme("dark");
   /* prefers light theme */
@@ -15,9 +17,6 @@
   /* increase font size on desktop */
   @include breakpoint(large){
     font-size: 18px;
-  }
-  @include breakpoint(hd){
-    font-size: 20px;
   }
 }
 
@@ -72,7 +71,8 @@ li,
 dt,
 dd {
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: color(--color-dark1);
 }
 
 a {

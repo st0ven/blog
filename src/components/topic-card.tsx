@@ -73,21 +73,24 @@ export function TopicCard({
 }: TopicCardProps) {
   const slug: string = buildSlug(title)
   return (
-    <aside className={styles.topicCard}>
-      <div className={styles.verticalRule}></div>
-      <div className={styles.dayOfTheMonth}>
-        {extractDayFromDateString(date)}
+    <section className={styles.topicCard}>
+      <div className={styles.cardMargin}>
+        <div className={styles.verticalRule} />
+        <span className={styles.dayOfTheMonth}>
+          {extractDayFromDateString(date)}
+        </span>
       </div>
-      {/* right column - Will hold text content */}
-      <h5 className={styles.title}>
-        <Link to={slug} className={styles.articleLink}>
-          {RichText.asText(title)}
-          <ArrowRightCircle className={styles.icon} />
-        </Link>
-      </h5>
-      <h6 className={styles.subtitle}>{RichText.asText(subtitle)}</h6>
-      {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
-      {media ? <div>{renderThumbnails(media)}</div> : null}
-    </aside>
+      <div className={styles.cardContent}>
+        <div>
+          <Link to={slug} className={styles.articleLink}>
+            {RichText.asText(title)}
+            <ArrowRightCircle className={styles.icon} />
+          </Link>
+        </div>
+        <span className={styles.description}>{RichText.asText(subtitle)}</span>
+        {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
+        {media ? <div>{renderThumbnails(media)}</div> : null}
+      </div>
+    </section>
   )
 }

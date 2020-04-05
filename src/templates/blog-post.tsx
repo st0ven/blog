@@ -2,12 +2,10 @@ import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
 import { graphql, Link } from "gatsby"
-import { navigate } from "@reach/router"
 import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
 import { ArrowLeftCircle, ArrowUpCircle } from "react-feather"
-import { getFormalDateFromString } from "~resources/chronology"
 
 import styles from "~templates/blog-post.module.scss"
 
@@ -35,15 +33,14 @@ function renderBodyContent(body: Array<any>) {
   })
 }
 
-function scrollToTop(){
-  if(window){
-    window.scrollTo(0,0);
+function scrollToTop() {
+  if (window) {
+    window.scrollTo(0, 0)
   }
 }
 
 export default ({ data, pageContext }: any) => {
   const { node }: any = data.prismic.allBlog_articles.edges[0]
-  const dateString: string = getFormalDateFromString(node.authored_date)
   return (
     <Layout>
       <header>
@@ -56,9 +53,11 @@ export default ({ data, pageContext }: any) => {
       <article className={styles.article}>
         <header className={styles.header}>
           <h1 className={styles.title}>{RichText.asText(node.title)}</h1>
-          <h2 className={styles.subtitle}>{RichText.asText(node.subtitle)}</h2>
+          <span className={styles.subtitle}>
+            {RichText.asText(node.subtitle)}
+          </span>
           <div className={styles.publishedDate}>
-            <PublishedDate date={dateString} />
+            <PublishedDate date={node.authored_date} title="date published" />
           </div>
         </header>
         <hr className={styles.horizontalRule} />

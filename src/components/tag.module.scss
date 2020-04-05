@@ -1,16 +1,16 @@
 @import "~styles/colors";
 @import "~styles/themes";
+@import "~styles/units";
 
 .tag {
-  padding: 0.5rem 1.2rem;
+  padding: $unit-size-sub $unit-size-small;
   display: flex;
   align-items: center;
   justify-content: center;
   background: color(--color-secondary, 0.16);
   color: color(--color-secondary, 1);
-  border-radius: 0.125rem;
+  border-radius: $unit-size-sub/2;
   box-sizing: border-box;
-  font-size: 0.875rem;
   font-weight: 400;
   text-transform: lowercase;
   white-space: nowrap;
