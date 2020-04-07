@@ -66,6 +66,7 @@
 
   .topic-link {
     margin-top: $unit-size-base;
+    }
   }
 }
 
@@ -90,7 +91,7 @@
     z-index: 2;
     @include theme(dark) {
       background: color(--color-dark1);
-      color: color(--color-light);
+      color: color(--color-light);=
       box-shadow: none;
     }
   }
