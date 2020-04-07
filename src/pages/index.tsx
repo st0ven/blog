@@ -47,7 +47,7 @@ export default function IndexPage({ data: { prismic } }) {
   )
 }
 
-export const postsQuery = graphql`
+export const query = graphql`
   query {
     prismic {
       allBlog_articles(last: 10) {

@@ -18,7 +18,7 @@ $root-font-size: 16px;
     @include map-css-vars-by-theme("light");
   }
   /* increase font size on desktop */
-  @include breakpoint(large){
+  @include breakpoint(large) {
     font-size: 18px;
   }
 }
@@ -82,7 +82,8 @@ a {
   border-radius: $unit-size-sub;
   margin-left: -$unit-size-sub;
   margin-right: -$unit-size-sub;
-  &:hover, &:focus {
+  &:hover,
+  &:focus {
     background: color(--color-primary);
     color: color(--color-light);
     border-radius: $unit-size-sub/2;

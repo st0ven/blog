@@ -6,18 +6,16 @@
  */
 
 import React from "react"
-import styles from "~components/layout.module.scss";
+import styles from "~components/layout.module.scss"
 
-const Layout = ({ children }) => {
-	return (
-		<>
-			<div className={styles.container}>
-				<header className={styles.header}>header</header>
-				<main className={styles.main}>{children}</main>
-				<footer className={styles.footer}>footer</footer>
-			</div>
-		</>
-	)
+export default function Layout({ children }) {
+  return (
+    <>
+      <div className={styles.container}>
+        <header className={styles.header}>header</header>
+        <main className={styles.main}>{children}</main>
+        <footer className={styles.footer}>footer</footer>
+      </div>
+    </>
+  )
 }
-
-export default Layout

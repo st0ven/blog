@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
-import { graphql, Link } from "gatsby"
+import { graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
@@ -59,7 +59,7 @@ export default ({ data, pageContext }: any) => {
       </article>
       <hr className={styles.horizontalRule} />
       <footer>
-        <AppLink icon={<ArrowUpCircle />} to={`${pageContext.slug}/#`}>
+        <AppLink icon={<ArrowUpCircle />} to={`/${pageContext.slug}/#`}>
           Back to top
         </AppLink>
       </footer>

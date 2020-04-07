@@ -1,6 +1,6 @@
 import React from "react"
 import cx from "classnames"
-import styles from "~components/tag.module.scss";
+import styles from "~components/tag.module.scss"
 
 interface TagProps {
   value: string

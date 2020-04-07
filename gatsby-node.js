@@ -11,16 +11,6 @@ const { buildSlug } = require(path.resolve(
   "src/resources/post-builder.js"
 ))
 
-exports.onCreateNode = ({ actions }) => {
-  actions.setWebpackConfig({
-    resolve: {
-      alias: {
-        Shared: path.resolve(__dirname, "src/Shared"),
-      },
-    },
-  })
-}
-
 exports.createPages = async function({ actions, graphql }) {
   const { data } = await graphql(`
     query {

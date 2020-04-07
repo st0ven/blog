@@ -5,7 +5,7 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React, { useLayoutEffect } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import Helmet from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
@@ -27,19 +27,15 @@ function SEO({ description, lang, meta, title }) {
 
   const metaDescription = description || site.siteMetadata.description
 
-  useLayoutEffect(() => {
-    if (window & window.feather) {
-      
-    }
-  }, [])
-
   return (
     <Helmet
       htmlAttributes={{
         lang,
       }}
       title={title}
-      titleTemplate={`%s | ${site.siteMetadata.title}`}
+      titleTemplate={`%s${
+        site.siteMetadata.title ? ` | ${site.siteMetadata.title}` : ""
+      }`}
       meta={[
         {
           name: `description`,
