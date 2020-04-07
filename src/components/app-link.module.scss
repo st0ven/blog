@@ -5,10 +5,15 @@
 .app-link {
   display: inline-flex;
   align-items: center;
+  padding-left: $unit-size-sub;
+  padding-right: $unit-size-sub;
+  margin-left: -$unit-size-sub;
 
   a {
-    order: 2;
     @include app-link(--color-primary);
+    order: 2;
+    border-radius: 0;
+    margin: 0;
   }
 
   i,
@@ -20,12 +25,18 @@
   &:hover,
   &:focus {
     outline: none;
+    background: color(--color-primary);
+    color: color(--color-light);
+    border-radius: $unit-size-sub/2;
+
     i,
     svg {
-      color: color(--color-highlight);
+      color: inherit;
     }
-    a {
-      @include app-link(--color-highlight);
+    span, a {
+      //@include app-link(--color-highlight);
+      background: none;
+      color: inherit;
     }
   }
 

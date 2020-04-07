@@ -5,7 +5,7 @@
 @mixin anchor-underline($color: --color-primary, $size: 1px) {
   color: color($color);
   outline: none;
-  padding: 0 0 calc(#{$unit-size-base/2} + #{$unit-size-sub/2});
+  padding: calc(#{$unit-size-base/2} + #{$unit-size-sub/2}) 0;
   background-position: left bottom;
   background-size: auto $size;
   background-repeat: repeat-x;
@@ -21,11 +21,6 @@
   color: color($color);
   font-weight: 500;
   cursor: pointer;
-  &:hover,
-  &:focus {
-    @include anchor-underline(--color-highlight, 1px);
-    color: color(--color-highlight);
-  }
 }
 
 @mixin anchor-with-icon($align: left) {

@@ -29,7 +29,7 @@ export function AppLink({
   const keyUpHandler = useCallback(
     (event: React.KeyboardEvent) => {
       if (event.key === "Enter") {
-        navigate(to)
+        navigate(`/${to}`)
       }
     },
     [to]

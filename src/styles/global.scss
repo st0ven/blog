@@ -75,8 +75,18 @@ dd {
 }
 
 a {
-  text-decoration: none;
   @include app-link(--color-primary);
+  text-decoration: none;
+  padding-left: $unit-size-sub;
+  padding-right: $unit-size-sub;
+  border-radius: $unit-size-sub;
+  margin-left: -$unit-size-sub;
+  margin-right: -$unit-size-sub;
+  &:hover, &:focus {
+    background: color(--color-primary);
+    color: color(--color-light);
+    border-radius: $unit-size-sub/2;
+  }
 }
 
 dt,
