@@ -8,5 +8,5 @@ interface TagProps {
 }
 
 export function Tag({ value, className }: TagProps) {
-  return <span className={cx(className, styles.tag)}>#{value}</span>
+  return <span className={cx(className, styles.tag)}>{value}</span>
 }

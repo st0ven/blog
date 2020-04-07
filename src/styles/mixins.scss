@@ -2,25 +2,32 @@
 @import "~styles/themes";
 @import "~styles/units";
 
-@mixin anchor-underline($color: --color-primary) {
-  transition: none;
+@mixin anchor-underline($color: --color-primary, $size: 1px) {
   display: inline;
   outline: none;
   color: color($color);
   padding: 0 0 $unit-size-sub;
   background: linear-gradient(
     to top,
-    color($color, 1) 1px,
-    transparent 1px
+    color($color, 1) $size,
+    transparent $size
   );
+}
 
+@mixin app-link($color: --color-primary) {
+  color: color($color);
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  padding: 0 $unit-size-sub;
+  cursor: pointer;
+  // mixin to apply underline properties
+  @include anchor-underline($color, $unit-size-sub/2);
+  // pseudo-selector change of color
   &:hover,
   &:focus {
-    background: linear-gradient(
-      to top,
-      color(--color-highlight, 1) 1px,
-      transparent 1px
-    );
+    color: color(--color-highlight);
+    @include anchor-underline(--color-highlight, $unit-size-sub/2);
   }
 }
 

@@ -3,6 +3,9 @@
 @import "~styles/mixins";
 @import "~styles/queries";
 @import "~styles/themes";
+@import "~styles/units";
+
+$root-font-size: 16px;
 
 $root-font-size: 16px;
 
@@ -32,10 +35,6 @@ body {
   padding: 0;
   font-family: Inter, sans-serif;
   color: color(--color-light);
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -76,23 +75,7 @@ dd {
 }
 
 a {
-  color: color(--color-primary);
-  text-decoration: none;
-  font-style: normal;
-  font-weight: 400;
-  padding: 0 0.25rem;
-  cursor: pointer;
-  // underline animation effect
-  transition-property: color, background-image, background-size;
-  transition-duration: 0.25s;
-  transition-timing-function: ease, ease, cubic-bezier(0, 0.75, 0.66, 1);
-  // mixin to apply underline properties
-  @include anchor-underline();
-  // pseudo-selector change of color
-  &:hover,
-  &:focus {
-    color: color(--color-highlight);
-  }
+  @include app-link();
 }
 
 dt,
