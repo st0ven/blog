@@ -1,0 +1,46 @@
+@import "~styles/colors";
+@import "~styles/mixins";
+@import "~styles/units";
+
+.app-link {
+  display: inline-flex;
+  align-items: center;
+
+  a {
+    order: 2;
+    @include app-link(--color-primary);
+  }
+
+  i,
+  svg {
+    position: relative;
+    padding-bottom: $unit-size-sub;
+    color: color(--color-primary);
+  }
+
+  &:hover,
+  &:focus {
+    outline: none;
+    i, svg {
+      color: color(--color-highlight);
+    }
+    a {
+      @include app-link(--color-highlight);
+    }
+  }
+
+  &.icon-align-left {
+    i,
+    svg {
+      margin-right: $unit-size-base;
+    }
+  }
+
+  &.icon-align-right {
+    i,
+    svg {
+      order: 3;
+      margin-left: $unit-size-base;
+    }
+  }
+}

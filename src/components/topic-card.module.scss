@@ -60,7 +60,12 @@
     .tag {
       flex: 1 1 1;
       margin: 0 $unit-size-base $unit-size-base 0;
+      font-size: 0.75rem;
     }
+  }
+
+  .topic-link {
+    margin-top: $unit-size-base;
   }
 }
 
@@ -84,7 +89,8 @@
     position: relative;
     z-index: 2;
     @include theme(dark) {
-      background: color(--color-light2);
+      background: color(--color-dark1);
+      color: color(--color-light);
       box-shadow: none;
     }
   }

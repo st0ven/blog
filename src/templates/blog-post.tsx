@@ -6,6 +6,7 @@ import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
 import { ArrowLeftCircle, ArrowUpCircle } from "react-feather"
+import { AppLink } from "~components/app-link"
 
 import styles from "~templates/blog-post.module.scss"
 
@@ -44,10 +45,9 @@ export default ({ data, pageContext }: any) => {
   return (
     <Layout>
       <header>
-        <Link className={styles.articleNavLink} to="/">
-          <ArrowLeftCircle className={styles.icon} />
+        <AppLink to="/" icon={<ArrowLeftCircle />}>
           Other articles
-        </Link>
+        </AppLink>
       </header>
       <hr className={styles.horizontalRule} />
       <article className={styles.article}>
@@ -65,10 +65,9 @@ export default ({ data, pageContext }: any) => {
       </article>
       <hr className={styles.horizontalRule} />
       <footer>
-        <a className={styles.articleNavLink} onClick={scrollToTop}>
-          <ArrowUpCircle className={styles.icon} />
+        <AppLink icon={<ArrowUpCircle />} to={`${pageContext.slug}/#`}>
           Back to top
-        </a>
+        </AppLink>
       </footer>
     </Layout>
   )

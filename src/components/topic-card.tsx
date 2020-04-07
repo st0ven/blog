@@ -17,6 +17,7 @@ import { navigate } from "@reach/router"
 import { Link } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { Tag } from "~components/tag"
+import { AppLink } from "~components/app-link"
 
 import styles from "~components/topic-card.module.scss"
 
@@ -82,10 +83,9 @@ export function TopicCard({
       </div>
       <div className={styles.cardContent}>
         <div>
-          <Link to={slug} className={styles.articleLink}>
+          <AppLink to={slug} className={styles.topicLink}>
             {RichText.asText(title)}
-            <ArrowRightCircle className={styles.icon} />
-          </Link>
+          </AppLink>
         </div>
         <span className={styles.description}>{RichText.asText(subtitle)}</span>
         {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
