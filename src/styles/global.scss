@@ -70,12 +70,13 @@ li,
 dt,
 dd {
   font-weight: 400;
-  line-height: 1.5;
+  line-height: 1.75;
   color: color(--color-dark1);
 }
 
 a {
-  @include app-link();
+  text-decoration: none;
+  @include app-link(--color-primary);
 }
 
 dt,

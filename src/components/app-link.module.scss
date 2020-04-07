@@ -14,14 +14,14 @@
   i,
   svg {
     position: relative;
-    padding-bottom: $unit-size-sub;
     color: color(--color-primary);
   }
 
   &:hover,
   &:focus {
     outline: none;
-    i, svg {
+    i,
+    svg {
       color: color(--color-highlight);
     }
     a {

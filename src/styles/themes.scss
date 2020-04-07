@@ -10,7 +10,7 @@ $theme-map: (
     --color-light: map-get($colors, black),
     --color-primary: map-get($colors, lilac),
     --color-secondary: map-get($colors, tangerine),
-    --color-highlight: map-get($colors, yellow)
+    --color-highlight: map-get($colors, yellow),
   ),
   light: (
     --color-dark: map-get($colors, black),
@@ -20,8 +20,7 @@ $theme-map: (
     --color-light: map-get($colors, white),
     --color-primary: map-get($colors, violet),
     --color-secondary: map-get($colors, maroon),
-    --color-highlight: map-get($colors, magenta)
-
+    --color-highlight: map-get($colors, green),
   ),
 );
 
@@ -32,8 +31,8 @@ $theme-map: (
   }
 }
 
-@mixin theme($theme){
-  @media (prefers-color-scheme: $theme){
+@mixin theme($theme) {
+  @media (prefers-color-scheme: $theme) {
     @content;
   }
 }

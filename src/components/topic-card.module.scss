@@ -7,7 +7,7 @@
   box-sizing: border-box;
   border-style: solid;
   border-width: 0px;
-  border-radius: 2px;
+  border-radius: $unit-size-sub;
   border-color: color(--color-light2);
   background: color(--color-light);
   padding: $unit-size-small;
@@ -60,7 +60,7 @@
     .tag {
       flex: 1 1 1;
       margin: 0 $unit-size-base $unit-size-base 0;
-      font-size: 0.75rem;
+      font-size: 0.875rem;
     }
   }
 
@@ -78,21 +78,15 @@
     border-radius: 100%;
     width: $unit-size-x-large;
     height: $unit-size-x-large;
+    background: color(--color-light2);
     color: color(--color-dark);
     font-weight: 400;
     display: flex;
     align-items: center;
     justify-content: center;
     box-sizing: border-box;
-    background: color(--color-light);
-    box-shadow: 0 0.33rem 0.5rem color(--color-dark, 0.15);
     position: relative;
     z-index: 2;
-    @include theme(dark) {
-      background: color(--color-dark1);
-      color: color(--color-light);
-      box-shadow: none;
-    }
   }
 
   .vertical-rule {

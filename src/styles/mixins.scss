@@ -3,11 +3,13 @@
 @import "~styles/units";
 
 @mixin anchor-underline($color: --color-primary, $size: 1px) {
-  display: inline;
-  outline: none;
   color: color($color);
-  padding: 0 0 $unit-size-sub;
-  background: linear-gradient(
+  outline: none;
+  padding: 0 0 calc(#{$unit-size-base/2} + #{$unit-size-sub/2});
+  background-position: left bottom;
+  background-size: auto $size;
+  background-repeat: repeat-x;
+  background-image: linear-gradient(
     to top,
     color($color, 1) $size,
     transparent $size
@@ -15,19 +17,14 @@
 }
 
 @mixin app-link($color: --color-primary) {
+  @include anchor-underline($color, 1px);
   color: color($color);
-  text-decoration: none;
-  font-style: normal;
-  font-weight: 400;
-  padding: 0 $unit-size-sub;
+  font-weight: 500;
   cursor: pointer;
-  // mixin to apply underline properties
-  @include anchor-underline($color, $unit-size-sub/2);
-  // pseudo-selector change of color
   &:hover,
   &:focus {
+    @include anchor-underline(--color-highlight, 1px);
     color: color(--color-highlight);
-    @include anchor-underline(--color-highlight, $unit-size-sub/2);
   }
 }
 

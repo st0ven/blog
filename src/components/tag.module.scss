@@ -10,10 +10,8 @@
   background: color(--color-secondary, 0.12);
   color: color(--color-secondary, 1);
   box-sizing: border-box;
+  border-radius: $unit-size-sub/2;
   font-weight: 400;
   text-transform: lowercase;
   white-space: nowrap;
-  @include theme(light) {
-    background: color(--color-secondary, 0.12);
-  }
 }

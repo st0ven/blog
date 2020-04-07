@@ -14,8 +14,6 @@ interface AppLinkProps {
   onClick?: () => void
 }
 
-function handleKeyUp(event: React.KeyboardEvent) {}
-
 export function AppLink({
   to,
   target = "blank",
@@ -39,9 +37,11 @@ export function AppLink({
   return (
     <span className={appLinkCx} tabIndex={0} onKeyUp={keyUpHandler}>
       {icon ? icon : null}
-      <Link to={to} target={target} tabIndex={-1}>
-        {children}
-      </Link>
+      <span>
+        <Link to={to} target={target} tabIndex={-1}>
+          {children}
+        </Link>
+      </span>
     </span>
   )
 }

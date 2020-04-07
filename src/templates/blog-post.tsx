@@ -34,12 +34,6 @@ function renderBodyContent(body: Array<any>) {
   })
 }
 
-function scrollToTop() {
-  if (window) {
-    window.scrollTo(0, 0)
-  }
-}
-
 export default ({ data, pageContext }: any) => {
   const { node }: any = data.prismic.allBlog_articles.edges[0]
   return (
