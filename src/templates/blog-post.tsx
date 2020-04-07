@@ -39,7 +39,7 @@ export default ({ data, pageContext }: any) => {
   return (
     <Layout>
       <header>
-        <AppLink to="" icon={<ArrowLeftCircle />}>
+        <AppLink to="/" icon={<ArrowLeftCircle />}>
           Other articles
         </AppLink>
       </header>
