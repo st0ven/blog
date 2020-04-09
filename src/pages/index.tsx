@@ -35,35 +35,7 @@ function renderChronologicalArticleGroups(
   )
 }
 
-export default function IndexPage(/*{ data: { prismic } }*/) {
-  const { prismic } = useStaticQuery(graphql`
-    query {
-      prismic {
-        allBlog_articles(last: 10) {
-          edges {
-            node {
-              subtitle
-              title
-              authored_date
-              body {
-                ... on PRISMIC_Blog_articleBodyMedia {
-                  type
-                  label
-                  fields {
-                    thumbnail
-                  }
-                }
-              }
-              _meta {
-                uid
-                tags
-              }
-            }
-          }
-        }
-      }
-    }
-  `)
+export default function IndexPage({ data: { prismic } }) {
   const { allBlog_articles } = prismic
   const articles: Array<any> = allBlog_articles.edges
   const chronologicalArticles: React.MutableRefObject<Array<
@@ -79,3 +51,32 @@ export default function IndexPage(/*{ data: { prismic } }*/) {
     </div>
   )
 }
+
+export const query = graphql`
+  query {
+    prismic {
+      allBlog_articles(last: 10) {
+        edges {
+          node {
+            subtitle
+            title
+            authored_date
+            body {
+              ... on PRISMIC_Blog_articleBodyMedia {
+                type
+                label
+                fields {
+                  thumbnail
+                }
+              }
+            }
+            _meta {
+              uid
+              tags
+            }
+          }
+        }
+      }
+    }
+  }
+`
