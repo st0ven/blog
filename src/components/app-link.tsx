@@ -39,7 +39,7 @@ export function AppLink({
     <span className={appLinkCx} tabIndex={0} onKeyUp={keyUpHandler}>
       {icon ? icon : null}
       <span>
-        <Link to={to} target={target} tabIndex={-1} ref={linkRef}>
+        <Link to={to} tabIndex={-1} ref={linkRef}>
           {children}
         </Link>
       </span>
