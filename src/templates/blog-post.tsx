@@ -1,7 +1,6 @@
 import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
-import { useStaticQuery, graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"

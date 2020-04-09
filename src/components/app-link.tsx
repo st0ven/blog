@@ -16,7 +16,7 @@ interface AppLinkProps {
 
 export function AppLink({
   to,
-  target = "blank",
+  target = "self",
   children,
   className = "",
   icon,
