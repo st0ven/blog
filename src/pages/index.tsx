@@ -1,8 +1,7 @@
 import React, { useRef } from "react"
 import cx from "classnames"
-import { graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import "~styles/global.scss"
-import styles from "~pages/page.module.scss"
 import Layout from "~components/layout"
 import SEO from "~components/seo"
 import { ArticleGroup } from "~components/article-group"
@@ -10,6 +9,9 @@ import {
   ChronologicalArticleGroup,
   organizePostChronologically,
 } from "~resources/chronology"
+
+import styles from "~pages/page.module.scss"
+import pageStyles from "~pages/index.module.scss"
 
 /*
 Given a list of ChronologicalArticleGroups, will
@@ -22,15 +24,46 @@ function renderChronologicalArticleGroups(
 ): React.ReactNode {
   return chronologicalArticles.current.map(
     (articleGroup: ChronologicalArticleGroup, index: number) => (
-      <section key={`${articleGroup.year}-${articleGroup.month}`}>
-        {index ? <hr /> : null}
+      <section
+        className={pageStyles.articleGroup}
+        key={`${articleGroup.year}-${articleGroup.month}`}
+      >
+        {index ? <hr className={pageStyles.horizontalRule} /> : null}
         <ArticleGroup {...articleGroup} />
       </section>
     )
   )
 }
 
-export default function IndexPage({ data: { prismic } }) {
+export default function IndexPage(/*{ data: { prismic } }*/) {
+  const { prismic } = useStaticQuery(graphql`
+    query {
+      prismic {
+        allBlog_articles(last: 10) {
+          edges {
+            node {
+              subtitle
+              title
+              authored_date
+              body {
+                ... on PRISMIC_Blog_articleBodyMedia {
+                  type
+                  label
+                  fields {
+                    thumbnail
+                  }
+                }
+              }
+              _meta {
+                uid
+                tags
+              }
+            }
+          }
+        }
+      }
+    }
+  `)
   const { allBlog_articles } = prismic
   const articles: Array<any> = allBlog_articles.edges
   const chronologicalArticles: React.MutableRefObject<Array<
@@ -46,32 +79,3 @@ export default function IndexPage({ data: { prismic } }) {
     </div>
   )
 }
-
-export const query = graphql`
-  query {
-    prismic {
-      allBlog_articles(last: 10) {
-        edges {
-          node {
-            subtitle
-            title
-            authored_date
-            body {
-              ... on PRISMIC_Blog_articleBodyMedia {
-                type
-                label
-                fields {
-                  thumbnail
-                }
-              }
-            }
-            _meta {
-              uid
-              tags
-            }
-          }
-        }
-      }
-    }
-  }
-`

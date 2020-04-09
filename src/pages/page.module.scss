@@ -1,6 +1,18 @@
 @import "~styles/colors";
 @import "~styles/queries";
+@import "~styles/units";
 
 .page {
   position: relative;
+}
+
+hr {
+  border: none;
+  outline: none;
+  background-color: color(--color-light2);
+  height: $unit-size-sub;
+  margin: $unit-size-medium 0;
+  @include breakpoint(large){
+    margin: $unit-size-large 0;
+  }
 }

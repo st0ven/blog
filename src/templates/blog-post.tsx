@@ -1,7 +1,7 @@
 import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
-import { graphql } from "gatsby"
+import { useStaticQuery, graphql } from "gatsby"
 import { RichText } from "prismic-reactjs"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
@@ -10,7 +10,7 @@ import { AppLink } from "~components/app-link"
 
 import styles from "~templates/blog-post.module.scss"
 
-function renderBodyContent(body: Array<any>) {
+function renderBodyContent(body: Array<any> = []) {
   return body.map((slice: any, index: number) => {
     const key: string = `${slice.type}-${index}`
     switch (slice.type) {
@@ -34,8 +34,8 @@ function renderBodyContent(body: Array<any>) {
   })
 }
 
-export default ({ data, pageContext }: any) => {
-  const { node }: any = data.prismic.allBlog_articles.edges[0]
+export default function BlogPost({ pageContext }: any) {
+  const { node, slug } = pageContext
   return (
     <Layout>
       <header>
@@ -59,60 +59,10 @@ export default ({ data, pageContext }: any) => {
       </article>
       <hr className={styles.horizontalRule} />
       <footer>
-        <AppLink icon={<ArrowUpCircle />} to={`/${pageContext.slug}/#`}>
+        <AppLink icon={<ArrowUpCircle />} to={`/${slug}/#`}>
           Back to top
         </AppLink>
       </footer>
     </Layout>
   )
 }
-
-export const query = graphql`
-  query($uid: String!) {
-    prismic {
-      allBlog_articles(uid: $uid) {
-        edges {
-          node {
-            title
-            subtitle
-            authored_date
-            body {
-              ... on PRISMIC_Blog_articleBodyArticle_content {
-                type
-                label
-                primary {
-                  rich_text
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyMedia {
-                type
-                label
-                fields {
-                  thumbnail
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyBlockquote {
-                type
-                label
-                primary {
-                  text
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
-                type
-                label
-              }
-              ... on PRISMIC_Blog_articleBodySection_title {
-                type
-                label
-                primary {
-                  section_title
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`
