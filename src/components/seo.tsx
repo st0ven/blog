@@ -23,6 +23,8 @@ function SEO({ description, lang, meta, title }) {
     `
   )
 
+  console.log(data);
+
   const metaDescription = description || data.site.siteMetadata.description
 
   return (
