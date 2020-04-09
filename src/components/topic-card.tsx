@@ -83,7 +83,7 @@ export function TopicCard({
       </div>
       <div className={styles.cardContent}>
         <div>
-          <AppLink to={slug} className={styles.topicLink}>
+          <AppLink to={`/${slug}`} className={styles.topicLink}>
             {RichText.asText(title)}
           </AppLink>
         </div>

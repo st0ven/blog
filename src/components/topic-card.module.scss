@@ -43,7 +43,7 @@
   justify-items: flex-start;
   row-gap: $unit-size-small;
 
-  .article-link {
+  .topic-link {
     @include anchor-with-icon(right);
     text-transform: capitalize;
   }
