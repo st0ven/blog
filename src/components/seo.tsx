@@ -6,68 +6,72 @@
  */
 
 import React from "react"
-import PropTypes from "prop-types"
 import Helmet from "react-helmet"
-import { useStaticQuery, graphql } from "gatsby"
+import { StaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta, title }) {
-  const data = useStaticQuery(
-    graphql`
-      query {
-        site {
-          siteMetadata {
-            description
-          }
+  const query = graphql`
+    query SEOQuery {
+      site {
+        siteMetadata {
+          author
+          description
+          title
         }
       }
-    `
-  )
-
-  console.log(data);
-
-  const metaDescription = description || data.site.siteMetadata.description
+    }
+  `
 
   return (
-    <Helmet
-      htmlAttributes={{
-        lang,
+    <StaticQuery
+      query={query}
+      render={({site}: any) => {
+        const metaDescription =
+          description || site.siteMetadescription
+        return (
+          <Helmet
+            htmlAttributes={{
+              lang,
+            }}
+            title={title}
+            titleTemplate={`%s`}
+            meta={[
+              {
+                name: `description`,
+                content: metaDescription,
+              },
+              {
+                property: `og:title`,
+                content: title,
+              },
+              {
+                property: `og:description`,
+                content: metaDescription,
+              },
+              {
+                property: `og:type`,
+                content: `website`,
+              },
+              {
+                name: `twitter:card`,
+                content: `summary`,
+              },
+              {
+                name: `twitter:creator`,
+                content: site.siteMetaauthor,
+              },
+              {
+                name: `twitter:title`,
+                content: title,
+              },
+              {
+                name: `twitter:description`,
+                content: metaDescription,
+              },
+            ].concat(meta)}
+          />
+        )
       }}
-      title={title}
-      titleTemplate={`%s`}
-      meta={[
-        {
-          name: `description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:title`,
-          content: title,
-        },
-        {
-          property: `og:description`,
-          content: metaDescription,
-        },
-        {
-          property: `og:type`,
-          content: `website`,
-        },
-        {
-          name: `twitter:card`,
-          content: `summary`,
-        },
-        {
-          name: `twitter:creator`,
-          content: data.site.siteMetadata.author,
-        },
-        {
-          name: `twitter:title`,
-          content: title,
-        },
-        {
-          name: `twitter:description`,
-          content: metaDescription,
-        },
-      ].concat(meta)}
     />
   )
 }

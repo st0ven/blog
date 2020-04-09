@@ -1,6 +1,5 @@
 import React, { useRef } from "react"
-import cx from "classnames"
-import { useStaticQuery, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import "~styles/global.scss"
 import Layout from "~components/layout"
 import SEO from "~components/seo"

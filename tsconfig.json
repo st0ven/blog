@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "baseUrl": "./src",
-    "jsx": "react",
+    "jsx": "preserve",
     "esModuleInterop": true,
     "paths": {
       "~components/*": ["components/*"],
