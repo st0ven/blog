@@ -8,19 +8,21 @@ export function ArticleGroup({
   year,
   articles,
 }: ChronologicalArticleGroup) {
+  const { linkResolver } = require("../resources/link-resolver.js")
   return (
     <div className={styles.articleGroup}>
       <h3 className={styles.month}>{month}</h3>
       <h6 className={styles.year}>{year}</h6>
       <ul className={styles.topics}>
-        {articles.map((node: any) => (
-          <li className={styles.topic} key={node._meta.uid}>
+        {articles.map((article: any) => (
+          <li className={styles.topic} key={article.uid}>
             <TopicCard
-              title={node.title}
-              subtitle={node.subtitle}
-              date={node.authored_date}
-              tags={node._meta.tags}
-              uid={node._meta.uid}
+              title={article.data.title}
+              subtitle={article.data.subtitle}
+              date={article.data.authored_date}
+              tags={article.tags}
+              uid={article.uid}
+              slug={linkResolver(article.data.title, article.type)}
             />
           </li>
         ))}

@@ -1,30 +1,101 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
 const path = require("path")
+const cookieParser = require("cookie-parser")
 const postTemplate = "./src/templates/blog-post.tsx"
-const { buildSlug } = require(path.resolve(
+const Prismic = require("prismic-javascript")
+const { linkResolver } = require(path.resolve(
   __dirname,
-  "src/resources/post-builder.js"
+  "src/resources/link-resolver.js"
 ))
+const entryPoint = "https://uxblog.prismic.io/api/v2"
 
-exports.createPages = async function({ actions, graphql }) {
-  const { data } = await graphql(buildPagesQuery)
-  // iterate through data from prismic graph call and create gatsby pages
-  data.prismic.allBlog_articles.edges.forEach(({ node }) => {
-    const slug = buildSlug(node.title)
-    // create pages for each post and pass useful contextual attributes
-    actions.createPage({
-      path: slug,
-      component: require.resolve(postTemplate),
-      context: { node, slug: slug },
-    })
+/*
+exports.onCreateNode = ({node, actions}) => {
+  console.log(node, actions);
+}
+*/
+
+function fetchDocumentsFromPrismicCMS() {
+  return Prismic.getApi(entryPoint).then(
+    (api) => api.query(Prismic.Predicates.at("document.type", "blog_article")),
+    { pageSize: 100 }
+  )
+}
+
+function createPages(page, createPage) {
+  const slug = linkResolver(page.data.title, page.type)
+  createPage({
+    path: slug,
+    component: require.resolve(postTemplate),
+    context: { ...page, slug: slug },
   })
 }
+
+exports.createPages = async function ({ actions, href }) {
+  console.log("create pages")
+  const { createPage } = actions
+  const response = await fetchDocumentsFromPrismicCMS(createPages)
+  response.results.map((page) => {
+    createPages(page, createPage)
+  })
+}
+
+exports.onCreateDevServer = (gatsby) => {
+  console.log("dev server complete")
+  const { app } = gatsby
+  //console.log(node);
+  const nodelist = gatsby.getNodes()
+  //console.log(nodelist)
+  app.use(cookieParser())
+  app.use((req, res, next) => {
+    const previewCookie = JSON.parse(req.cookies["io.prismic.preview"])
+    nodelist.forEach((node) => gatsby.actions.createNodeField({
+      node, 
+      name: 'previewCookie',
+      value: previewCookie
+    }))
+    console.log(previewCookie["uxblog.prismic.io"]["preview"])
+    next()
+  })
+  /*app.get('/', (req, res) => {
+    const previewCookie = JSON.parse(req.cookies['io.prismic.preview'])
+    console.log(previewCookie['uxblog.prismic.io']['preview'])
+    app.handle(req, res)
+  })*/
+}
+
+/*
+exports.onCreatePage = async ({ page, actions }) => {
+  const { createPage, deletePage } = actions
+  const { graphql } = require("gatsby")
+
+  if (page.context.type === "blog_article") {
+    console.log(page.path);
+    const Prismic = require("prismic-javascript")
+
+    Prismic.getApi(entryPoint)
+      .then((api) => api.getByID(page.context.id))
+      .then(
+        (response) => {
+          console.log(response)
+          const slug = linkResolver(response.data.title, response.type)
+          deletePage(page)
+          createPage({
+            ...page,
+            matchPath: slug,
+            context: {
+              ...page.context,
+              slug
+            },
+          })
+        },
+        (error) => {
+          console.log(error)
+        }
+      )
+  }
+  //const oldPage = Object.assign({}, page)
+}
+*/
 
 // query to fetch all blog posts
 // may need to be updated in the future to accommodate boundaries
@@ -71,6 +142,7 @@ const buildPagesQuery = `
             }
             _meta {
               uid
+              type
             }
             title
             subtitle

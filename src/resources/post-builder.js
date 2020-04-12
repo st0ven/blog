@@ -1,5 +1,4 @@
 const { RichText } = require("prismic-reactjs")
-
 /* 
 Build a slug for a given blog post as fetched from a Prismic backend API call
   prismicTitle: A prismic object which has the structure of :
@@ -16,7 +15,6 @@ module.exports = {
     const urlSafeTitle = encodeURIComponent(
       extractedTitleString.replace(/\s/g, "-")
     ).toLowerCase()
-    const slug = `articles/${urlSafeTitle}`
-    return slug
+    return urlSafeTitle
   },
 }

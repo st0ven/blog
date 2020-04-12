@@ -10,21 +10,21 @@ import { AppLink } from "~components/app-link"
 import styles from "~templates/blog-post.module.scss"
 
 function renderBodyContent(body: Array<any> = []) {
-  return body.map((slice: any, index: number) => {
-    const key: string = `${slice.type}-${index}`
-    switch (slice.type) {
+  return body.map(({ slice_type, primary }: any, index: number) => {
+    const key: string = `${slice_type}-${index}`
+    switch (slice_type) {
       case "article_content":
-        return <RichText render={slice.primary.rich_text} key={key} />
+        return <RichText render={primary.rich_text} key={key} />
         break
       case "section_title":
         return (
           <h3 className={styles.sectionTitle} key={key}>
-            {RichText.asText(slice.primary.section_title)}
+            {RichText.asText(primary.section_title)}
           </h3>
         )
         break
       case "blockquote":
-        return <Blockquote text={slice.primary.text} key={key} />
+        return <Blockquote text={primary.text} key={key} />
         break
       case "horizontal_rule":
         return <hr className={styles.horizontalRule} key={key} />
@@ -34,7 +34,7 @@ function renderBodyContent(body: Array<any> = []) {
 }
 
 export default function BlogPost({ pageContext }: any) {
-  const { node, slug } = pageContext
+  const { data, slug } = pageContext
   return (
     <Layout>
       <header>
@@ -45,16 +45,16 @@ export default function BlogPost({ pageContext }: any) {
       <hr className={styles.horizontalRule} />
       <article className={styles.article}>
         <header className={styles.header}>
-          <h1 className={styles.title}>{RichText.asText(node.title)}</h1>
+          <h1 className={styles.title}>{RichText.asText(data.title)}</h1>
           <span className={styles.subtitle}>
-            {RichText.asText(node.subtitle)}
+            {RichText.asText(data.subtitle)}
           </span>
           <div className={styles.publishedDate}>
-            <PublishedDate date={node.authored_date} title="date published" />
+            <PublishedDate date={data.authored_date} title="date published" />
           </div>
         </header>
         <hr className={styles.horizontalRule} />
-        <section>{renderBodyContent(node.body)}</section>
+        <section>{renderBodyContent(data.body)}</section>
       </article>
       <hr className={styles.horizontalRule} />
       <footer>

@@ -4,9 +4,9 @@
 $theme-map: (
   dark: (
     --color-dark: map-get($colors, white),
-    --color-dark1: map-get($colors, gray400),
-    --color-light2: map-get($colors, gray800),
-    --color-light1: map-get($colors, gray900),
+    --color-dark1: desaturate(adjust-hue(lighten(map-get($colors, black), 50%),-60%), 10%),
+    --color-light2: desaturate(adjust-hue(lighten(map-get($colors, black), 10%), -20%), 5%),
+    --color-light1: desaturate(adjust-hue(lighten(map-get($colors, black), 2%), -5%), 3%),
     --color-light: map-get($colors, black),
     --color-primary: map-get($colors, lilac),
     --color-secondary: map-get($colors, tangerine),

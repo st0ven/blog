@@ -1,14 +1,14 @@
-import React, { useRef } from "react"
-import { graphql } from "gatsby"
-import "~styles/global.scss"
+import React, { useLayoutEffect, useState } from "react"
+import { getBlogPosts } from "~api/prismic"
 import Layout from "~components/layout"
 import SEO from "~components/seo"
 import { ArticleGroup } from "~components/article-group"
 import {
   ChronologicalArticleGroup,
-  organizePostChronologically,
+  useOrganizePostsChronologically,
 } from "~resources/chronology"
 
+import "~styles/global.scss"
 import styles from "~pages/page.module.scss"
 import pageStyles from "~pages/index.module.scss"
 
@@ -17,11 +17,9 @@ Given a list of ChronologicalArticleGroups, will
 iterate through groups and render each as a ReactNode
 */
 function renderChronologicalArticleGroups(
-  chronologicalArticles: React.MutableRefObject<
-    Array<ChronologicalArticleGroup>
-  >
+  chronologicalArticles: Array<ChronologicalArticleGroup>
 ): React.ReactNode {
-  return chronologicalArticles.current.map(
+  return chronologicalArticles.map(
     (articleGroup: ChronologicalArticleGroup, index: number) => (
       <section
         className={pageStyles.articleGroup}
@@ -34,48 +32,30 @@ function renderChronologicalArticleGroups(
   )
 }
 
-export default function IndexPage({ data: { prismic } }) {
-  const { allBlog_articles } = prismic
-  const articles: Array<any> = allBlog_articles.edges
-  const chronologicalArticles: React.MutableRefObject<Array<
-    ChronologicalArticleGroup
-  >> = useRef(organizePostChronologically(articles))
+export default function IndexPage(pageData: any) {
+  const [blogArticles, setBlogArticles] = useState<Array<any>>([])
+  const { chronologicalArticleGroups } = useOrganizePostsChronologically(
+    blogArticles
+  )
+  const { location }: any = pageData
+  const token: string | undefined = location.search
+    ? location.search.replace("?token=", "")
+    : undefined
+
+  useLayoutEffect(() => {
+    if (!blogArticles.length) {
+      getBlogPosts({ref: token, orderings: '[document.first_publication_date]'}).then((response: any) => {
+        setBlogArticles(response.results)
+      })
+    }
+  }, [pageData])
 
   return (
     <div className={styles.page}>
       <Layout>
         <SEO title="Stephen Seator | UX/UI Blog" />
-        {renderChronologicalArticleGroups(chronologicalArticles)}
+        {renderChronologicalArticleGroups(chronologicalArticleGroups)}
       </Layout>
     </div>
   )
 }
-
-export const query = graphql`
-  query {
-    prismic {
-      allBlog_articles(last: 10) {
-        edges {
-          node {
-            subtitle
-            title
-            authored_date
-            body {
-              ... on PRISMIC_Blog_articleBodyMedia {
-                type
-                label
-                fields {
-                  thumbnail
-                }
-              }
-            }
-            _meta {
-              uid
-              tags
-            }
-          }
-        }
-      }
-    }
-  }
-`

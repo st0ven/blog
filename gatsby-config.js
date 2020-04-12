@@ -1,5 +1,18 @@
 // node imports
 const path = require("path")
+const plugins = []
+const { linkResolver } = require("./src/resources/link-resolver.js")
+console.log(linkResolver);
+if (process.env.NODE_ENV === "development") {
+  plugins.push({
+    resolve: "gatsby-plugin-prismic-preview",
+    options: {
+      repositoryName: "uxblog",
+      linkResolver: linkResolver,
+      path: '/preview'
+    },
+  })
+}
 
 // enable environment variables with dotenv package
 require("dotenv").config({
@@ -47,28 +60,12 @@ module.exports = {
         allExtensions: true, // defaults to false
       },
     },
-    {
-      resolve: `gatsby-source-prismic-graphql`,
-      options: {
-        repositoryName: "uxblog",
-        // no longer necessary as it has been made public for master access
-        // accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-        /*
-        pages: [{
-          type: 'Blog_article',
-          match: `uxblog/articles/:uid`,
-          path: 'uxblog/articles/',
-          component: require.resolve('./src/templates/blog-post.tsx'),
-          sortBy: 'date_ASC'
-        }]
-        */
-      },
-    },
     // alias support
     {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
+          "~api": path.resolve(__dirname, "src/api"),
           "~components": path.resolve(__dirname, "src/components"),
           "~pages": path.resolve(__dirname, "src/pages"),
           "~resources": path.resolve(__dirname, "src/resources"),
@@ -89,6 +86,7 @@ module.exports = {
     },
     // emotion css-in-js support
     `gatsby-plugin-sass`,
+    ...plugins,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,

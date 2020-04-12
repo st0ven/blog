@@ -33,7 +33,8 @@
     svg {
       color: inherit;
     }
-    span, a {
+    span,
+    a {
       //@include app-link(--color-highlight);
       background: none;
       color: inherit;

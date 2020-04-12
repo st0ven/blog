@@ -5,12 +5,12 @@
  * See: https://www.gatsbyjs.org/docs/use-static-query/
  */
 
-import React from "react"
+import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
 function SEO({ description, lang, meta, title }) {
-  const query = graphql`
+  const query: string = graphql`
     query SEOQuery {
       site {
         siteMetadata {
@@ -25,9 +25,8 @@ function SEO({ description, lang, meta, title }) {
   return (
     <StaticQuery
       query={query}
-      render={({site}: any) => {
-        const metaDescription =
-          description || site.siteMetadescription
+      render={({ site }: any) => {
+        const metaDescription = description || site.siteMetadescription
         return (
           <Helmet
             htmlAttributes={{
@@ -69,7 +68,19 @@ function SEO({ description, lang, meta, title }) {
                 content: metaDescription,
               },
             ].concat(meta)}
-          />
+          >
+            <script>
+              {`
+                window.prismic = {
+                  endpoint: 'https://uxblog.cdn.prismic.io/api/v2'
+                };
+              `}
+            </script>
+            <script
+              type="text/javascript"
+              src="https://static.cdn.prismic.io/prismic.min.js?new=true"
+            ></script>
+          </Helmet>
         )
       }}
     />
