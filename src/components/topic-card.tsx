@@ -16,50 +16,48 @@ import { Tag } from "~components/tag"
 import { AppLink } from "~components/app-link"
 import { getDayFromDateString } from "~resources/chronology"
 import styles from "~components/topic-card.module.scss"
-// js module to help build our post slug urls
-const { linkResolver } = require("~resources/link-resolver")
 
 interface TopicCardProps {
-  title: Array<any>
-  subtitle?: Array<any>
-  date: any
-  tags?: Array<string>
-  uid: string,
-  slug: string
+	title: Array<any>
+	subtitle?: Array<any>
+	date: any
+	tags?: Array<string>
+	uid: string
+	slug: string
 }
 
 // iterate through list of tags and render appropriate JSX/Component
 // to return a collection of ReactElements
 function renderTags(tags: Array<string>): Array<React.ReactElement> {
-  return tags.map((tag: string) => (
-    <Tag key={tag} className={styles.tag} value={tag} />
-  ))
+	return tags.map((tag: string) => (
+		<Tag key={tag} className={styles.tag} value={tag} />
+	))
 }
 
 export function TopicCard({
-  title,
-  subtitle,
-  date,
-  tags,
-  slug
+	title,
+	subtitle,
+	date,
+	tags,
+	slug,
 }: TopicCardProps) {
-  return (
-    <section className={styles.topicCard}>
-      <div className={styles.cardMargin}>
-        <div className={styles.verticalRule} />
-        <span className={styles.dayOfTheMonth}>
-          {getDayFromDateString(date)}
-        </span>
-      </div>
-      <div className={styles.cardContent}>
-        <div>
-          <AppLink to={slug} className={styles.topicLink}>
-            {RichText.asText(title)}
-          </AppLink>
-        </div>
-        <span className={styles.description}>{RichText.asText(subtitle)}</span>
-        {tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
-      </div>
-    </section>
-  )
+	return (
+		<section className={styles.topicCard}>
+			<div className={styles.cardMargin}>
+				<div className={styles.verticalRule} />
+				<span className={styles.dayOfTheMonth}>
+					{getDayFromDateString(date)}
+				</span>
+			</div>
+			<div className={styles.cardContent}>
+				<div>
+					<AppLink to={slug} className={styles.topicLink}>
+						{RichText.asText(title)}
+					</AppLink>
+				</div>
+				<span className={styles.description}>{RichText.asText(subtitle)}</span>
+				{tags ? <div className={styles.tags}>{renderTags(tags)}</div> : null}
+			</div>
+		</section>
+	)
 }

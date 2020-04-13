@@ -1,155 +1,78 @@
 const path = require("path")
 const cookieParser = require("cookie-parser")
 const postTemplate = "./src/templates/blog-post.tsx"
-const Prismic = require("prismic-javascript")
+const { getBlogPosts } = require("./src/api/prismic")
 const { linkResolver } = require(path.resolve(
   __dirname,
   "src/resources/link-resolver.js"
 ))
-const entryPoint = "https://uxblog.prismic.io/api/v2"
 
-/*
-exports.onCreateNode = ({node, actions}) => {
-  console.log(node, actions);
-}
-*/
+const article_api_id = "blog_article"
+const isProduction = process.env.NODE_ENV === "production"
+// closure variable to store preview token from Prismic
+let prismicPreviewToken
 
-function fetchDocumentsFromPrismicCMS() {
-  return Prismic.getApi(entryPoint).then(
-    (api) => api.query(Prismic.Predicates.at("document.type", "blog_article")),
-    { pageSize: 100 }
-  )
-}
-
-function createPages(page, createPage) {
+// create a new page to be cached by gatsby's store
+function createPageWithContext(page, createPage, context = {}) {
   const slug = linkResolver(page.data.title, page.type)
-  createPage({
+  return createPage({
     path: slug,
     component: require.resolve(postTemplate),
-    context: { ...page, slug: slug },
+    context: { ...page, slug: slug, ...context },
   })
-}
-
-exports.createPages = async function ({ actions, href }) {
-  console.log("create pages")
-  const { createPage } = actions
-  const response = await fetchDocumentsFromPrismicCMS(createPages)
-  response.results.map((page) => {
-    createPages(page, createPage)
-  })
-}
-
-exports.onCreateDevServer = (gatsby) => {
-  console.log("dev server complete")
-  const { app } = gatsby
-  //console.log(node);
-  const nodelist = gatsby.getNodes()
-  //console.log(nodelist)
-  app.use(cookieParser())
-  app.use((req, res, next) => {
-    const previewCookie = JSON.parse(req.cookies["io.prismic.preview"])
-    nodelist.forEach((node) => gatsby.actions.createNodeField({
-      node, 
-      name: 'previewCookie',
-      value: previewCookie
-    }))
-    console.log(previewCookie["uxblog.prismic.io"]["preview"])
-    next()
-  })
-  /*app.get('/', (req, res) => {
-    const previewCookie = JSON.parse(req.cookies['io.prismic.preview'])
-    console.log(previewCookie['uxblog.prismic.io']['preview'])
-    app.handle(req, res)
-  })*/
 }
 
 /*
-exports.onCreatePage = async ({ page, actions }) => {
-  const { createPage, deletePage } = actions
-  const { graphql } = require("gatsby")
-
-  if (page.context.type === "blog_article") {
-    console.log(page.path);
-    const Prismic = require("prismic-javascript")
-
-    Prismic.getApi(entryPoint)
-      .then((api) => api.getByID(page.context.id))
-      .then(
-        (response) => {
-          console.log(response)
-          const slug = linkResolver(response.data.title, response.type)
-          deletePage(page)
-          createPage({
-            ...page,
-            matchPath: slug,
-            context: {
-              ...page.context,
-              slug
-            },
-          })
-        },
-        (error) => {
-          console.log(error)
-        }
-      )
-  }
-  //const oldPage = Object.assign({}, page)
-}
+Fetch the latest published articles through Prismic API
 */
+exports.createPages = async ({ actions }) => {
+  const { createPage } = actions
+  return await getBlogPosts().then((response) => {
+    response.results.map((page) => {
+      createPageWithContext(page, createPage)
+    })
+  })
+}
 
-// query to fetch all blog posts
-// may need to be updated in the future to accommodate boundaries
-// or new criteria
-const buildPagesQuery = `
-  {
-    prismic {
-      allBlog_articles {
-        edges {
-          node {
-            body {
-              ... on PRISMIC_Blog_articleBodyArticle_content {
-                type
-                label
-                primary {
-                  rich_text
-                }
+exports.onCreateDevServer = isProduction
+  ? null
+  : function DevServerEffect({ app, actions, getNodesByType }) {
+      const { createPage } = actions
+      // grab node list from gatsby, filtering only those of SitePage type.
+      // further filter out only blog articles to be included in the list.
+      const pageNodes = getNodesByType("SitePage").filter(
+        (node) => node.context && node.context.type === article_api_id
+      )
+      // use cookie parser
+      app.use(cookieParser())
+      /* 
+				We want to check here to see if prismic has passed a preview token.
+				If so, we want to fetch the available posts in the preview with the
+				valid token. Once fetched, create a new node in gatsby's store if the
+				article was not already public. This allows local support for preview content.
+			*/
+
+      app.use(async (req, res, next) => {
+        const prismicPreviewCookie = req.cookies["io.prismic.preview"]
+        if (prismicPreviewCookie && !prismicPreviewToken) {
+          prismicPreviewToken = JSON.parse(prismicPreviewCookie)[
+            "uxblog.prismic.io"
+          ]["preview"]
+          /*
+						Use preview token to fetch the latest blog articles that may be unpublished.
+						Compare any new posts against existing gatsby nodes and if no matches are encountered,
+						create a new gatsby page for the unpublished article.
+					*/
+          await getBlogPosts({ ref: prismicPreviewToken }).then((response) => {
+            response.results.forEach(async (page) => {
+              if (!pageNodes.some((pageNode) => page.path === pageNode.path)) {
+                await createPageWithContext(page, createPage, {
+                  prismicPreviewToken,
+                })
               }
-              ... on PRISMIC_Blog_articleBodyMedia {
-                type
-                label
-                fields {
-                  thumbnail
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyBlockquote {
-                type
-                label
-                primary {
-                  text
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
-                type
-                label
-              }
-              ... on PRISMIC_Blog_articleBodySection_title {
-                type
-                label
-                primary {
-                  section_title
-                }
-              }
-            }
-            _meta {
-              uid
-              type
-            }
-            title
-            subtitle
-            authored_date
-          }
+            })
+          })
         }
-      }
+        next()
+      })
     }
-  }
-`

@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from "react"
+import { StaticQuery, graphql } from "gatsby"
 import { getBlogPosts } from "~api/prismic"
 import Layout from "~components/layout"
 import SEO from "~components/seo"
@@ -11,6 +12,31 @@ import {
 import "~styles/global.scss"
 import styles from "~pages/page.module.scss"
 import pageStyles from "~pages/index.module.scss"
+
+const query = graphql`
+  query FetchAllPages {
+    allSitePage(filter: { context: { type: { eq: "blog_article" } } }) {
+      nodes {
+        context {
+          uid
+          type
+          tags
+          slug
+          first_publication_date
+          lang
+          data {
+            title {
+              text
+            }
+            subtitle {
+              text
+            }
+          }
+        }
+      }
+    }
+  }
+`
 
 /*
 Given a list of ChronologicalArticleGroups, will
@@ -32,30 +58,33 @@ function renderChronologicalArticleGroups(
   )
 }
 
-export default function IndexPage(pageData: any) {
-  const [blogArticles, setBlogArticles] = useState<Array<any>>([])
-  const { chronologicalArticleGroups } = useOrganizePostsChronologically(
-    blogArticles
-  )
-  const { location }: any = pageData
-  const token: string | undefined = location.search
-    ? location.search.replace("?token=", "")
-    : undefined
+/*
+  transforms gatsby nodes fetched from static query to the model expected
+  to represent a blog article
+*/
+function transformGatsbyNodesToArticles(nodelist): Array<any> {
+  return nodelist.map((node) => node.context)
+}
 
-  useLayoutEffect(() => {
-    if (!blogArticles.length) {
-      getBlogPosts({ref: token, orderings: '[document.first_publication_date]'}).then((response: any) => {
-        setBlogArticles(response.results)
-      })
-    }
-  }, [pageData])
-
-  return (
-    <div className={styles.page}>
-      <Layout>
-        <SEO title="Stephen Seator | UX/UI Blog" />
-        {renderChronologicalArticleGroups(chronologicalArticleGroups)}
-      </Layout>
-    </div>
-  )
+export default function IndexPage() {
+  // render method to pass along to StaticQuery component
+  function render({ allSitePage }: any): React.ReactNode {
+    const { chronologicalArticleGroups } = useOrganizePostsChronologically(
+      transformGatsbyNodesToArticles(allSitePage.nodes)
+    )
+    return (
+      <div className={styles.page}>
+        <Layout>
+          <SEO title="Stephen Seator | UX/UI Blog" />
+          {renderChronologicalArticleGroups(chronologicalArticleGroups)}
+        </Layout>
+      </div>
+    )
+  }
+  /*
+    provider for our renderer to expose gatsby's node store
+    All relevant articles should have been fetched by the server,
+    including any preview articles yet unpublished.
+  */
+  return <StaticQuery query={query} render={render} />
 }

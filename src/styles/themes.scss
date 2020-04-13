@@ -4,18 +4,24 @@
 $theme-map: (
   dark: (
     --color-dark: map-get($colors, white),
-    --color-dark1: desaturate(adjust-hue(lighten(map-get($colors, black), 50%),-60%), 10%),
-    --color-light2: desaturate(adjust-hue(lighten(map-get($colors, black), 10%), -20%), 5%),
-    --color-light1: desaturate(adjust-hue(lighten(map-get($colors, black), 2%), -5%), 3%),
+    --color-dark1:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 50%), -40%), 8%),
+    --color-light2:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 10%), -20%), 5%),
+    --color-light1:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 3%), -5%), 3%),
     --color-light: map-get($colors, black),
     --color-primary: map-get($colors, lilac),
     --color-secondary: map-get($colors, tangerine),
   ),
   light: (
     --color-dark: map-get($colors, black),
-    --color-dark1: map-get($colors, gray600),
-    --color-light2: map-get($colors, gray200),
-    --color-light1: map-get($colors, gray100),
+    --color-dark1:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 33%), -20%), 10%),
+    --color-light2:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 80%), -30%), 7%),
+    --color-light1:
+      desaturate(adjust-hue(lighten(map-get($colors, black), 88%), -40%), 5%),
     --color-light: map-get($colors, white),
     --color-primary: map-get($colors, violet),
     --color-secondary: map-get($colors, sienna),

@@ -5,7 +5,6 @@ module.exports = {
     const slug = buildSlug(title);
     switch (type) {
       case "blog_article":
-        console.log(slug);
         return `/articles/${slug}`
       default:
         return "/"

@@ -15,26 +15,23 @@ function renderBodyContent(body: Array<any> = []) {
     switch (slice_type) {
       case "article_content":
         return <RichText render={primary.rich_text} key={key} />
-        break
       case "section_title":
         return (
           <h3 className={styles.sectionTitle} key={key}>
             {RichText.asText(primary.section_title)}
           </h3>
         )
-        break
       case "blockquote":
         return <Blockquote text={primary.text} key={key} />
-        break
       case "horizontal_rule":
         return <hr className={styles.horizontalRule} key={key} />
-        break
     }
   })
 }
 
 export default function BlogPost({ pageContext }: any) {
-  const { data, slug } = pageContext
+  const { first_publication_date, data, slug } = pageContext
+  const { title, subtitle } = data
   return (
     <Layout>
       <header>
@@ -45,12 +42,13 @@ export default function BlogPost({ pageContext }: any) {
       <hr className={styles.horizontalRule} />
       <article className={styles.article}>
         <header className={styles.header}>
-          <h1 className={styles.title}>{RichText.asText(data.title)}</h1>
-          <span className={styles.subtitle}>
-            {RichText.asText(data.subtitle)}
-          </span>
+          <h1 className={styles.title}>{RichText.asText(title)}</h1>
+          <span className={styles.subtitle}>{RichText.asText(subtitle)}</span>
           <div className={styles.publishedDate}>
-            <PublishedDate date={data.authored_date} title="date published" />
+            <PublishedDate
+              date={first_publication_date}
+              title="date published"
+            />
           </div>
         </header>
         <hr className={styles.horizontalRule} />

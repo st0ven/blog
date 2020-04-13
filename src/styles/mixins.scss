@@ -5,7 +5,7 @@
 @mixin anchor-underline($color: --color-primary, $size: 1px) {
   color: color($color);
   outline: none;
-  padding: calc(#{$unit-size-base/2} + #{$unit-size-sub/2}) 0;
+  padding:  $unit-size-sub/2 0;
   background-position: left bottom;
   background-size: auto $size;
   background-repeat: repeat-x;
@@ -19,7 +19,7 @@
 @mixin app-link($color: --color-primary) {
   @include anchor-underline($color, 1px);
   color: color($color);
-  font-weight: 500;
+  font-weight: 400;
   cursor: pointer;
 }
 

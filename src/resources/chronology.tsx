@@ -1,5 +1,3 @@
-import React from 'react'
-
 export interface ChronologicalArticleGroup {
   year: number
   month: string
@@ -7,9 +5,9 @@ export interface ChronologicalArticleGroup {
 }
 
 /*
-  Given an array of ChronologicalArticleGroup, and an ArticleDate,
-  recursively cycle through the group and return the group that matches the
-  supplied date by both year and month. If none is found, return void/undefined
+	Given an array of ChronologicalArticleGroup, and an ArticleDate,
+	recursively cycle through the group and return the group that matches the
+	supplied date by both year and month. If none is found, return void/undefined
 */
 export function findArticleDateGroup(
   sortedGroup: Array<ChronologicalArticleGroup>,
@@ -29,20 +27,18 @@ export function findArticleDateGroup(
 }
 
 /*
-  Given a list of articles fetched from Prismic back-end, structure the content
-  to be ordered and grouped chronologically, first by year and date, and then containing
-  a list of articles under that group (also ordered chonologically).
-  NOTE: the order of the results is presuemd to be descending order sorted by API response
+	Given a list of articles fetched from Prismic back-end, structure the content
+	to be ordered and grouped chronologically, first by year and date, and then containing
+	a list of articles under that group (also ordered chonologically).
+	NOTE: the order of the results is presuemd to be descending order sorted by API response
 */
-export function useOrganizePostsChronologically(
-  articles: Array<any>
-) {
+export function useOrganizePostsChronologically(articles: Array<any>) {
   // create a placeholder array to store the ordered groups of articles
   const orderedArticles: Array<ChronologicalArticleGroup> = []
   // loop through articles list provided via API to organize
   articles.map((page: any) => {
-    // extract date and year component
-    const { authored_date } = page.data
+    //const { authored_date } = page.data
+    const authored_date = page.first_publication_date
     const month: string = getLocaleMonthFromDateString(authored_date)
     const year: number = getYearFromDateString(authored_date)
     // if there is already an existing article group of this date and year,
@@ -61,7 +57,7 @@ export function useOrganizePostsChronologically(
         })
   })
   return {
-    chronologicalArticleGroups: orderedArticles
+    chronologicalArticleGroups: orderedArticles,
   }
 }
 

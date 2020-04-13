@@ -1,18 +1,5 @@
 // node imports
 const path = require("path")
-const plugins = []
-const { linkResolver } = require("./src/resources/link-resolver.js")
-console.log(linkResolver);
-if (process.env.NODE_ENV === "development") {
-  plugins.push({
-    resolve: "gatsby-plugin-prismic-preview",
-    options: {
-      repositoryName: "uxblog",
-      linkResolver: linkResolver,
-      path: '/preview'
-    },
-  })
-}
 
 // enable environment variables with dotenv package
 require("dotenv").config({
@@ -86,7 +73,6 @@ module.exports = {
     },
     // emotion css-in-js support
     `gatsby-plugin-sass`,
-    ...plugins,
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
