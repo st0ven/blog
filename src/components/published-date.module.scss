@@ -1,12 +1,12 @@
-@import "~styles/colors";
+@import "~styles/themes";
 @import "~styles/units";
 
 .date-box {
-  color: color(--color-dark);
+  color: rgba-color(foreground-0);
   text-transform: capitalize;
 }
 
 .title {
-  color: color(--color-dark);
+  color: rgba-color(foreground-0);
   font-weight: 600;
 }

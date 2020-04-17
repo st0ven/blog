@@ -1,0 +1,22 @@
+@import "~styles/themes";
+@import "~styles/mixins";
+
+.wrapper {
+  display: block;
+  position: relative;
+  @include responsive-spacing("margin");
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.filename {
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-style: italic;
+  padding: $unit-size-sub/2 0;
+}
+
+.snippet {
+  background: rgba-color(background-0);
+  padding: 0.75rem 1rem;
+}

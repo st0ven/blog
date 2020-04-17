@@ -2,23 +2,23 @@
 @import "~styles/themes";
 @import "~styles/units";
 
-@mixin anchor-underline($color: --color-primary, $size: 1px) {
-  color: color($color);
+@mixin anchor-underline($color: primary, $size: 1px) {
+  color: rgba-color($color);
   outline: none;
-  padding:  $unit-size-sub/2 0;
+  padding: $unit-size-sub/2 0;
   background-position: left bottom;
   background-size: auto $size;
   background-repeat: repeat-x;
   background-image: linear-gradient(
     to top,
-    color($color, 1) $size,
+    rgba-color($color, 1) $size,
     transparent $size
   );
 }
 
-@mixin app-link($color: --color-primary) {
+@mixin app-link($color: primary) {
   @include anchor-underline($color, 1px);
-  color: color($color);
+  color: rgba-color($color);
   font-weight: 400;
   cursor: pointer;
 }
@@ -35,19 +35,19 @@
   }
 }
 
-@mixin css-underline($size: 2px, $color: --color-dark, $opacity: 1) {
-  display: inline-block;
+@mixin css-underline($size: 2px, $color: foreground-0, $opacity: 1) {
+  display: inline;
   padding-bottom: $size;
   background-repeat: repeat-x;
   background-image: linear-gradient(
     to top,
-    color($color, $opacity) $size,
+    rgba-color($color, $opacity) $size,
     transparent $size
   );
 }
 
-@mixin horizontal-rule($color: --color-light2) {
-  background: color($color);
+@mixin horizontal-rule($color: background-2) {
+  background: rgba-color($color);
   width: 100%;
   max-height: none;
   height: $unit-size-sub;
@@ -56,5 +56,15 @@
   margin: $unit-size-medium 0;
   @include breakpoint(large) {
     margin: $unit-size-large 0;
+  }
+}
+
+@mixin responsive-spacing($property: "margin", $coefficient: 1) {
+  #{$property}: $unit-size-small*$coefficient;
+  @include breakpoint(medium) {
+    #{$property}: $unit-size-medium*$coefficient;
+  }
+  @include breakpoint(large) {
+    #{$property}: $unit-size-large*$coefficient;
   }
 }

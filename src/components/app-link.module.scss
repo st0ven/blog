@@ -1,16 +1,16 @@
-@import "~styles/colors";
 @import "~styles/mixins";
 @import "~styles/units";
+@import "~styles/themes";
 
 .app-link {
   display: inline-flex;
   align-items: center;
-  padding-left: $unit-size-sub;
-  padding-right: $unit-size-sub;
-  margin-left: -$unit-size-sub;
+  padding-left: $unit-size-sub/2;
+  padding-right: $unit-size-sub/2;
+  margin-left: -$unit-size-sub/2;
 
   a {
-    @include app-link(--color-primary);
+    @include app-link(primary);
     order: 2;
     border-radius: 0;
     margin: 0;
@@ -19,15 +19,18 @@
   i,
   svg {
     position: relative;
-    color: color(--color-primary);
+    color: rgba-color(primary);
   }
 
   &:hover,
   &:focus {
     outline: none;
-    background: color(--color-primary);
-    color: color(--color-light);
+    background: rgba-color(highlight);
+    color: rgba-color(background-0);
     border-radius: $unit-size-sub/2;
+    @media (prefers-color-scheme: light) {
+      color: rgba-color(foreground-0);
+    }
 
     i,
     svg {
@@ -35,7 +38,7 @@
     }
     span,
     a {
-      //@include app-link(--color-highlight);
+      //@include app-link(highlight);
       background: none;
       color: inherit;
     }

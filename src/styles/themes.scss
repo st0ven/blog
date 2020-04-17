@@ -1,42 +1,57 @@
-@import "~styles/colors";
+$palette: (
+  black: #100f14,
+  smoke: #9dacbf,
+  white: #ffffff,
+  cobalt: #004ec2,
+  maroon: #9e0360,
+  tangerine: #ff9a52,
+  teal: #20e1e3,
+  aqua: #027870,
+  sienna: #b5300b,
+  lilac: #aa82ff,
+  violet: #5c4ac7,
+  yellow: #ffe226,
+);
 
-/* color mapping for available themes within the app. */
-$theme-map: (
-  dark: (
-    --color-dark: map-get($colors, white),
-    --color-dark1:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 50%), -40%), 8%),
-    --color-light2:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 10%), -20%), 5%),
-    --color-light1:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 3%), -5%), 3%),
-    --color-light: map-get($colors, black),
-    --color-primary: map-get($colors, lilac),
-    --color-secondary: map-get($colors, tangerine),
-  ),
-  light: (
-    --color-dark: map-get($colors, black),
-    --color-dark1:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 33%), -20%), 10%),
-    --color-light2:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 80%), -30%), 7%),
-    --color-light1:
-      desaturate(adjust-hue(lighten(map-get($colors, black), 88%), -40%), 5%),
-    --color-light: map-get($colors, white),
-    --color-primary: map-get($colors, violet),
-    --color-secondary: map-get($colors, sienna),
-  ),
+// dark theme value map
+$dark-theme: (
+  foreground-0: map-get($palette, white),
+  neutral: //map-get($palette, smoke),
+    desaturate(adjust-hue(lighten(map-get($palette, black), 60%), -20%), 3%),
+  background-2:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 10%), -10%), 1%),
+  background-1:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 3%), -2%), 0%),
+  background-0: map-get($palette, black),
+  primary: map-get($palette, lilac),
+  secondary: map-get($palette, tangerine),
+  highlight: map-get($palette, yellow),
+  code: map-get($palette, teal),
+);
+
+// light theme value map
+$light-theme: (
+  foreground-0: map-get($palette, black),
+  neutral:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 40%), -20%), 10%),
+  background-2:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 83%), -30%), 7%),
+  background-1:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 88%), -40%), 5%),
+  background-0: map-get($palette, white),
+  primary: map-get($palette, violet),
+  secondary: map-get($palette, sienna),
+  highlight: map-get($palette, yellow),
+  code: map-get($palette, maroon),
 );
 
 /* populates css color variable mapping to theme-map */
 @mixin map-css-vars-by-theme($theme) {
-  @each $color-var, $color in map-get($theme-map, $theme) {
-    #{$color-var}: #{get-primaries-from-color($color)};
+  @each $color-key, $color in $theme {
+    --color-#{$color-key}: #{red($color), green($color), blue($color)};
   }
 }
 
-@mixin theme($theme) {
-  @media (prefers-color-scheme: $theme) {
-    @content;
-  }
+@function rgba-color($color-key, $opacity: 1) {
+  @return rgba(var(--color-#{$color-key}), $opacity);
 }

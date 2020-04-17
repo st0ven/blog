@@ -28,9 +28,11 @@ Fetch the latest published articles through Prismic API
 exports.createPages = async ({ actions }) => {
   const { createPage } = actions
   return await getBlogPosts().then((response) => {
-    response.results.map((page) => {
-      createPageWithContext(page, createPage)
-    })
+    if (response.results) {
+      response.results.map((page) => {
+        createPageWithContext(page, createPage)
+      })
+    }
   })
 }
 
@@ -64,13 +66,17 @@ exports.onCreateDevServer = isProduction
 						create a new gatsby page for the unpublished article.
 					*/
           await getBlogPosts({ ref: prismicPreviewToken }).then((response) => {
-            response.results.forEach(async (page) => {
-              if (!pageNodes.some((pageNode) => page.path === pageNode.path)) {
-                await createPageWithContext(page, createPage, {
-                  prismicPreviewToken,
-                })
-              }
-            })
+            if (response && response.results) {
+              response.results.forEach(async (page) => {
+                if (
+                  !pageNodes.some((pageNode) => page.path === pageNode.path)
+                ) {
+                  await createPageWithContext(page, createPage, {
+                    prismicPreviewToken,
+                  })
+                }
+              })
+            }
           })
         }
         next()

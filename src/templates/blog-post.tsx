@@ -2,8 +2,10 @@ import React from "react"
 import Layout from "~components/layout"
 import hljs from "highlight.js"
 import { RichText } from "prismic-reactjs"
+import { CodeSnippet} from "~components/code-snippet"
 import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
+import { CallOut } from "~components/call-out"
 import { ArrowLeftCircle, ArrowUpCircle } from "react-feather"
 import { AppLink } from "~components/app-link"
 
@@ -11,6 +13,7 @@ import styles from "~templates/blog-post.module.scss"
 
 function renderBodyContent(body: Array<any> = []) {
   return body.map(({ slice_type, primary }: any, index: number) => {
+    console.log(slice_type);
     const key: string = `${slice_type}-${index}`
     switch (slice_type) {
       case "article_content":
@@ -25,6 +28,10 @@ function renderBodyContent(body: Array<any> = []) {
         return <Blockquote text={primary.text} key={key} />
       case "horizontal_rule":
         return <hr className={styles.horizontalRule} key={key} />
+      case "code_snippet":
+        return <CodeSnippet {...primary} key={key}/>
+      case "call-out":
+        return <CallOut body={primary.rich_text} title={primary.call_out_title} key={key} />
     }
   })
 }
