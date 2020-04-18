@@ -15,15 +15,18 @@ import pageStyles from "~pages/index.module.scss"
 
 const query = graphql`
   query FetchAllPages {
-    allSitePage(filter: { context: { type: { eq: "blog_article" } } }) {
+    allSitePage(
+      sort: { fields: context___first_publication_date, order: ASC }
+      filter: { context: { type: { eq: "blog_article" } } }
+    ) {
       nodes {
         context {
           uid
           type
           tags
           slug
+          id
           first_publication_date
-          lang
           data {
             title {
               text
