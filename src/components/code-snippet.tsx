@@ -22,27 +22,29 @@ const highlighterOptions = {
 // field model expected from Prismic back-end
 interface CodeSnippetProps {
   highlight: string
-	filename?: string
-	// Prismic specific formatted text resposnse
+  filename?: string
+  // Prismic specific formatted text resposnse
   code: any
 }
 
 export function CodeSnippet({ highlight, filename, code }: CodeSnippetProps) {
-	// set an initial theme based on detected appearance settings
-  const [useTheme, setUseTheme] = useState<any>(
-    window.matchMedia(`(prefers-color-scheme: light)`).matches
-      ? hlLightThemeStyle
-      : hlDarkThemeStyle
-	)
-	// change the theme to be applied whenever the browser detects an appearance setting change
+  // set an initial theme based on detected appearance settings
+  const [useTheme, setUseTheme] = useState<any>(hlDarkThemeStyle)
+  // change the theme to be applied whenever the browser detects an appearance setting change
   useLayoutEffect(function () {
-    window
-      .matchMedia(`(prefers-color-scheme: light)`)
-      .addEventListener("change", (event: MediaQueryListEvent) => {
-        setUseTheme(event.matches ? hlLightThemeStyle : hlDarkThemeStyle)
-      })
-	}, [])
-	// render output
+    if (window && window.matchMedia) {
+      const query = `(prefers-color-scheme: light)`
+      window
+        .matchMedia(query)
+        .addEventListener("change", (event: MediaQueryListEvent) => {
+          setUseTheme(event.matches ? hlLightThemeStyle : hlDarkThemeStyle)
+        })
+      setUseTheme(
+        window.matchMedia(query).matches ? hlLightThemeStyle : hlDarkThemeStyle
+      )
+    }
+  }, [])
+  // render output
   return (
     <figure className={styles.wrapper}>
       <figcaption className={styles.filename}>{filename}</figcaption>

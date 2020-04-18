@@ -55,11 +55,9 @@ exports.onCreateDevServer = isProduction
 			*/
 
       app.use(async (req, res, next) => {
-        const prismicPreviewCookie = req.cookies["io.prismic.preview"]
-        if (prismicPreviewCookie && !prismicPreviewToken) {
-          prismicPreviewToken = JSON.parse(prismicPreviewCookie)[
-            "uxblog.prismic.io"
-          ]["preview"]
+        const {token} = req.query;
+        if (token && !prismicPreviewToken) {
+          prismicPreviewToken = token
           /*
 						Use preview token to fetch the latest blog articles that may be unpublished.
 						Compare any new posts against existing gatsby nodes and if no matches are encountered,

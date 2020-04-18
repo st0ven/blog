@@ -13,7 +13,6 @@ import styles from "~templates/blog-post.module.scss"
 
 function renderBodyContent(body: Array<any> = []) {
   return body.map(({ slice_type, primary }: any, index: number) => {
-    console.log(slice_type);
     const key: string = `${slice_type}-${index}`
     switch (slice_type) {
       case "article_content":
