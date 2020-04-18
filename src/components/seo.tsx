@@ -9,7 +9,7 @@ import React, { Fragment } from "react"
 import Helmet from "react-helmet"
 import { StaticQuery, graphql } from "gatsby"
 
-function SEO({ description, lang, meta, title }) {
+function SEO({ description, lang, meta, title, preview = false }) {
   const query: void = graphql`
     query SEOQuery {
       site {
@@ -21,6 +21,14 @@ function SEO({ description, lang, meta, title }) {
       }
     }
   `
+
+  const prismicPreviewSnackbar = (
+    <script
+      async
+      defer
+      src={`https://static.cdn.prismic.io/prismic.js?repo=uxblog.prismic.io&new=true`}
+    ></script>
+  )
 
   return (
     <StaticQuery
@@ -69,17 +77,7 @@ function SEO({ description, lang, meta, title }) {
               },
             ].concat(meta)}
           >
-            <script>
-              {`
-                window.prismic = {
-                  endpoint: 'https://uxblog.cdn.prismic.io/api/v2'
-                };
-              `}
-            </script>
-            <script
-              type="text/javascript"
-              src="https://static.cdn.prismic.io/prismic.min.js?new=true"
-            ></script>
+            {preview ? prismicPreviewSnackbar : null}
           </Helmet>
         )
       }}

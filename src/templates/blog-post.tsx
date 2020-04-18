@@ -1,36 +1,34 @@
 import React from "react"
 import Layout from "~components/layout"
-import hljs from "highlight.js"
+import { Blockquote, CallOut, CodeBlock, SectionTitle } from "~slices"
 import { RichText } from "prismic-reactjs"
-import { CodeSnippet} from "~components/code-snippet"
-import { Blockquote } from "~components/blockquote"
 import { PublishedDate } from "~components/published-date"
-import { CallOut } from "~components/call-out"
 import { ArrowLeftCircle, ArrowUpCircle } from "react-feather"
 import { AppLink } from "~components/app-link"
-
 import styles from "~templates/blog-post.module.scss"
 
-function renderBodyContent(body: Array<any> = []) {
+function renderSlices(body: Array<any> = []) {
   return body.map(({ slice_type, primary }: any, index: number) => {
     const key: string = `${slice_type}-${index}`
     switch (slice_type) {
       case "article_content":
         return <RichText render={primary.rich_text} key={key} />
       case "section_title":
-        return (
-          <h3 className={styles.sectionTitle} key={key}>
-            {RichText.asText(primary.section_title)}
-          </h3>
-        )
+        return <SectionTitle title={primary.section_title} key={key} />
       case "blockquote":
         return <Blockquote text={primary.text} key={key} />
       case "horizontal_rule":
         return <hr className={styles.horizontalRule} key={key} />
       case "code_snippet":
-        return <CodeSnippet {...primary} key={key}/>
+        return <CodeBlock {...primary} key={key} />
       case "call-out":
-        return <CallOut body={primary.rich_text} title={primary.call_out_title} key={key} />
+        return (
+          <CallOut
+            body={primary.rich_text}
+            title={primary.call_out_title}
+            key={key}
+          />
+        )
     }
   })
 }
@@ -58,7 +56,7 @@ export default function BlogPost({ pageContext }: any) {
           </div>
         </header>
         <hr className={styles.horizontalRule} />
-        <section>{renderBodyContent(data.body)}</section>
+        <section>{renderSlices(data.body)}</section>
       </article>
       <hr className={styles.horizontalRule} />
       <footer>

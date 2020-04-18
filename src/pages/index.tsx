@@ -13,7 +13,7 @@ import "~styles/global.scss"
 import styles from "~pages/page.module.scss"
 import pageStyles from "~pages/index.module.scss"
 
-const query = graphql`
+const query: void = graphql`
   query FetchAllPages {
     allSitePage(
       sort: { fields: context___first_publication_date, order: ASC }

@@ -3,13 +3,14 @@
 @import "~styles/units";
 
 .call-out-wrapper {
-  @include responsive-spacing("padding", 0.75);
-  background: rgba-color(background-2);
+  @include responsive-spacing("padding", (top, right, bottom, left));
+  background: rgba-color(primary, 0.1);
   border-width: 0;
   border-left-width: $unit-size-sub;
   border-style: solid;
-  border-color: rgba-color(foreground-0);
+  border-color: rgba-color(primary);
   border-radius: $unit-size-sub/2;
+  font-size: 0.875rem;
 
   h4 {
     color: rgba-color(foreground-0);

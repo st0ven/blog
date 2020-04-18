@@ -4,11 +4,13 @@
     "baseUrl": "./src",
     "jsx": "preserve",
     "esModuleInterop": true,
+    "include": ["declarations.d.ts"],
     "paths": {
       "~api/*": ["api/*"],
       "~components/*": ["components/*"],
       "~pages/*": ["pages/*"],
       "~resources/*": ["resources/*"],
+      "~slices/*": ["components/slices/*"],
       "~styles/*": ["styles/*"],
       "~templates/*": ["templates/*"]
     }

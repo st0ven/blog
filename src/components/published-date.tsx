@@ -14,7 +14,9 @@ export function PublishedDate({
   const dateString: string = getFormalDateFromString(date)
   return (
     <dl className={styles.dateBox}>
-      <dt className={styles.title}>{title}</dt>
+      <dt className={styles.title}>
+        <strong>{title}</strong>
+      </dt>
       <dd>
         <time className={styles.date} dateTime={date}>
           {dateString}

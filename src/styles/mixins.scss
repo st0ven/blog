@@ -59,12 +59,18 @@
   }
 }
 
-@mixin responsive-spacing($property: "margin", $coefficient: 1) {
-  #{$property}: $unit-size-small*$coefficient;
+@mixin applyBoundaries($property, $boundaries, $size){
+  @each $boundary in $boundaries {
+    #{$property}-#{$boundary}: #{$size};
+  }
+}
+
+@mixin responsive-spacing($property: "margin", $boundaries:(top, bottom), $coefficient: 1) {
+  @include applyBoundaries($property, $boundaries, $unit-size-small*$coefficient);
   @include breakpoint(medium) {
-    #{$property}: $unit-size-medium*$coefficient;
+    @include applyBoundaries($property, $boundaries, $unit-size-medium*$coefficient);
   }
   @include breakpoint(large) {
-    #{$property}: $unit-size-large*$coefficient;
+    @include applyBoundaries($property, $boundaries, $unit-size-large*$coefficient);
   }
 }

@@ -2,7 +2,7 @@
 @import "~styles/themes";
 
 pre {
-  @include responsive-spacing(padding, 0.5);
+  @include responsive-spacing(padding, (top, right, bottom, left), 0.5);
   background: rgba-color(background-0);
   border-radius: $unit-size-sub/2;
   margin-top: $unit-size-base;
