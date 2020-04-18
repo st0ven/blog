@@ -16,7 +16,9 @@ export function PublishedDate({
     <dl className={styles.dateBox}>
       <dt className={styles.title}>{title}</dt>
       <dd>
-        <time className={styles.date} dateTime={date}>{dateString}</time>
+        <time className={styles.date} dateTime={date}>
+          {dateString}
+        </time>
       </dd>
     </dl>
   )

@@ -1,19 +1,19 @@
-@import url("https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700&display=swap");
-@import "~styles/colors";
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
 @import "~styles/mixins";
 @import "~styles/queries";
 @import "~styles/themes";
 @import "~styles/units";
 
 $root-font-size: 16px;
+$font-sans-serif: "Courier Prime", serif;
 
 :root {
   font-size: $root-font-size;
   /* default theme */
-  @include map-css-vars-by-theme("dark");
+  @include map-css-vars-by-theme($dark-theme);
   /* prefers light theme */
-  @include theme("light") {
-    @include map-css-vars-by-theme("light");
+  @media (prefers-color-scheme: light) {
+    @include map-css-vars-by-theme($light-theme);
   }
   /* increase font size on desktop */
   @include breakpoint(large) {
@@ -31,12 +31,14 @@ body {
   width: 100%;
   margin: 0;
   padding: 0;
-  font-family: Inter, sans-serif;
-  color: color(--color-light);
+  //font-family: Inter, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
+    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  color: rgba-color(foreground-0);
 }
 
 body {
-  background-color: color(--color-light1);
+  background-color: rgba-color(background-1);
 }
 
 h1,
@@ -68,23 +70,26 @@ li,
 dt,
 dd {
   font-weight: 400;
-  line-height: 1.75;
-  color: color(--color-dark1);
+  line-height: 1.5;
+  color: rgba-color(neutral);
 }
 
 a {
-  @include app-link(--color-primary);
+  @include app-link(primary);
   text-decoration: none;
-  padding-left: $unit-size-sub;
-  padding-right: $unit-size-sub;
-  border-radius: $unit-size-sub;
-  margin-left: -$unit-size-sub;
-  margin-right: -$unit-size-sub;
+  padding-left: $unit-size-sub/2;
+  padding-right: $unit-size-sub/2;
+  border-radius: $unit-size-sub/2;
+  margin-left: -$unit-size-sub/2;
+  margin-right: -$unit-size-sub/2;
   &:hover,
   &:focus {
-    background: color(--color-primary);
-    color: color(--color-light);
+    background: rgba-color(highlight);
+    color: rgba-color(background-0);
     border-radius: $unit-size-sub/2;
+    @media (prefers-color-scheme: light) {
+      color: rgba-color(foreground-0);
+    }
   }
 }
 
@@ -104,4 +109,10 @@ dd {
     max-width: 100%;
     height: auto;
   }
+}
+
+.code {
+	color: rgba-color(secondary);
+	padding: $unit-size-sub/2 $unit-size-sub/2;
+	font-family: monospace;
 }

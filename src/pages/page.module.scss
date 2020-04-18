@@ -1,4 +1,4 @@
-@import "~styles/colors";
+@import "~styles/themes";
 @import "~styles/queries";
 @import "~styles/units";
 
@@ -9,10 +9,10 @@
 hr {
   border: none;
   outline: none;
-  background-color: color(--color-light2);
+  background-color: rgba-color(background-2);
   height: $unit-size-sub;
   margin: $unit-size-medium 0;
-  @include breakpoint(large){
+  @include breakpoint(large) {
     margin: $unit-size-large 0;
   }
 }

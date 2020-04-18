@@ -47,28 +47,12 @@ module.exports = {
         allExtensions: true, // defaults to false
       },
     },
-    {
-      resolve: `gatsby-source-prismic-graphql`,
-      options: {
-        repositoryName: "uxblog",
-        // no longer necessary as it has been made public for master access
-        // accessToken: process.env.PRISMIC_ACCESS_TOKEN,
-        /*
-        pages: [{
-          type: 'Blog_article',
-          match: `uxblog/articles/:uid`,
-          path: 'uxblog/articles/',
-          component: require.resolve('./src/templates/blog-post.tsx'),
-          sortBy: 'date_ASC'
-        }]
-        */
-      },
-    },
     // alias support
     {
       resolve: `gatsby-plugin-alias-imports`,
       options: {
         alias: {
+          "~api": path.resolve(__dirname, "src/api"),
           "~components": path.resolve(__dirname, "src/components"),
           "~pages": path.resolve(__dirname, "src/pages"),
           "~resources": path.resolve(__dirname, "src/resources"),

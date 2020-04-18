@@ -1,11 +1,10 @@
-@import "~styles/colors";
+@import "~styles/themes";
 @import "~styles/mixins";
 @import "~styles/units";
 
 .horizontal-rule {
   @include horizontal-rule;
 }
-
 
 .article-group {
   margin-bottom: $unit-size-large;

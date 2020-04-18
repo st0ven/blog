@@ -1,83 +1,84 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
 const path = require("path")
+const cookieParser = require("cookie-parser")
 const postTemplate = "./src/templates/blog-post.tsx"
-const { buildSlug } = require(path.resolve(
+const { getBlogPosts } = require("./src/api/prismic")
+const { linkResolver } = require(path.resolve(
   __dirname,
-  "src/resources/post-builder.js"
+  "src/resources/link-resolver.js"
 ))
 
-exports.createPages = async function({ actions, graphql }) {
-  const { data } = await graphql(buildPagesQuery)
-  // iterate through data from prismic graph call and create gatsby pages
-  data.prismic.allBlog_articles.edges.forEach(({ node }) => {
-    const slug = buildSlug(node.title)
-    // create pages for each post and pass useful contextual attributes
-    actions.createPage({
-      path: slug,
-      component: require.resolve(postTemplate),
-      context: { node, slug: slug },
-    })
+const article_api_id = "blog_article"
+const isProduction = process.env.NODE_ENV === "production"
+// closure variable to store preview token from Prismic
+let prismicPreviewToken
+
+// create a new page to be cached by gatsby's store
+function createPageWithContext(page, createPage, context = {}) {
+  const slug = linkResolver(page.data.title, page.type)
+  return createPage({
+    path: slug,
+    component: require.resolve(postTemplate),
+    context: { ...page, slug: slug, ...context },
   })
 }
 
-// query to fetch all blog posts
-// may need to be updated in the future to accommodate boundaries
-// or new criteria
-const buildPagesQuery = `
-  {
-    prismic {
-      allBlog_articles {
-        edges {
-          node {
-            body {
-              ... on PRISMIC_Blog_articleBodyArticle_content {
-                type
-                label
-                primary {
-                  rich_text
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyMedia {
-                type
-                label
-                fields {
-                  thumbnail
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyBlockquote {
-                type
-                label
-                primary {
-                  text
-                }
-              }
-              ... on PRISMIC_Blog_articleBodyHorizontal_rule {
-                type
-                label
-              }
-              ... on PRISMIC_Blog_articleBodySection_title {
-                type
-                label
-                primary {
-                  section_title
-                }
-              }
-            }
-            _meta {
-              uid
-            }
-            title
-            subtitle
-            authored_date
-          }
-        }
-      }
+/*
+Fetch the latest published articles through Prismic API
+*/
+exports.createPages = async ({ actions }) => {
+  const { createPage } = actions
+  return await getBlogPosts().then((response) => {
+    if (response.results) {
+      response.results.map((page) => {
+        createPageWithContext(page, createPage)
+      })
     }
-  }
-`
+  })
+}
+
+exports.onCreateDevServer = isProduction
+  ? null
+  : function DevServerEffect({ app, actions, getNodesByType }) {
+      const { createPage } = actions
+      // grab node list from gatsby, filtering only those of SitePage type.
+      // further filter out only blog articles to be included in the list.
+      const pageNodes = getNodesByType("SitePage").filter(
+        (node) => node.context && node.context.type === article_api_id
+      )
+      // use cookie parser
+      app.use(cookieParser())
+      /* 
+				We want to check here to see if prismic has passed a preview token.
+				If so, we want to fetch the available posts in the preview with the
+				valid token. Once fetched, create a new node in gatsby's store if the
+				article was not already public. This allows local support for preview content.
+			*/
+
+      app.use(async (req, res, next) => {
+        const prismicPreviewCookie = req.cookies["io.prismic.preview"]
+        if (prismicPreviewCookie && !prismicPreviewToken) {
+          prismicPreviewToken = JSON.parse(prismicPreviewCookie)[
+            "uxblog.prismic.io"
+          ]["preview"]
+          /*
+						Use preview token to fetch the latest blog articles that may be unpublished.
+						Compare any new posts against existing gatsby nodes and if no matches are encountered,
+						create a new gatsby page for the unpublished article.
+					*/
+          await getBlogPosts({ ref: prismicPreviewToken }).then((response) => {
+            if (response && response.results) {
+              response.results.forEach(async (page) => {
+                if (
+                  !pageNodes.some((pageNode) => page.path === pageNode.path)
+                ) {
+                  await createPageWithContext(page, createPage, {
+                    prismicPreviewToken,
+                  })
+                }
+              })
+            }
+          })
+        }
+        next()
+      })
+    }

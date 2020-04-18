@@ -1,5 +1,4 @@
 import React from "react"
-import cx from "classnames"
 import styles from "~components/blockquote.module.scss"
 
 interface BlockquoteProps {

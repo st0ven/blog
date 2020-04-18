@@ -5,6 +5,7 @@
     "jsx": "preserve",
     "esModuleInterop": true,
     "paths": {
+      "~api/*": ["api/*"],
       "~components/*": ["components/*"],
       "~pages/*": ["pages/*"],
       "~resources/*": ["resources/*"],
