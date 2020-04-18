@@ -55,7 +55,7 @@ exports.onCreateDevServer = isProduction
 			*/
 
       app.use(async (req, res, next) => {
-        const {token} = req.query;
+        const { token } = req.query
         if (token && !prismicPreviewToken) {
           prismicPreviewToken = token
           /*
