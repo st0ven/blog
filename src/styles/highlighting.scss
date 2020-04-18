@@ -6,6 +6,10 @@ pre {
   background: rgba-color(background-0);
   border-radius: $unit-size-sub/2;
   margin-top: $unit-size-base;
+  max-width: 100%;
+  overflow: scroll;
+  position: relative;
+
   code {
     line-height: 1.5rem !important;
     background: transparent !important;

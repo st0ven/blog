@@ -34,13 +34,14 @@ export function CodeSnippet({ highlight, filename, code }: CodeSnippetProps) {
   useLayoutEffect(function () {
     if (window && window.matchMedia) {
       const query = `(prefers-color-scheme: light)`
-      window
-        .matchMedia(query)
-        .addEventListener("change", (event: MediaQueryListEvent) => {
+      const queryList = window.matchMedia(query)
+      if(queryList.addEventListener){
+        queryList.addEventListener("change", (event: MediaQueryListEvent) => {
           setUseTheme(event.matches ? hlLightThemeStyle : hlDarkThemeStyle)
         })
+      }
       setUseTheme(
-        window.matchMedia(query).matches ? hlLightThemeStyle : hlDarkThemeStyle
+        queryList.matches ? hlLightThemeStyle : hlDarkThemeStyle
       )
     }
   }, [])
