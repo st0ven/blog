@@ -3,7 +3,7 @@ const path = require("path")
 
 // enable environment variables with dotenv package
 require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
+	path: `.env.${process.env.NODE_ENV}`,
 })
 
 module.exports = {
@@ -31,15 +31,15 @@ module.exports = {
         short_name: `starter`,
         start_url: `/`,
         background_color: `#663399`,
-        theme_color: `#663399`,
+        theme_color: `#fff`,
         display: `minimal-ui`,
-        // icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: "src/images/placeholder.png",
       },
     },
     /*
-    Typescript support:
-    look for https://www.gatsbyjs.org/packages/gatsby-plugin-typescript/ for further documentation
-    */
+			Typescript support:
+			look for https://www.gatsbyjs.org/packages/gatsby-plugin-typescript/ for further documentation
+		*/
     {
       resolve: `gatsby-plugin-typescript`,
       options: {
@@ -56,6 +56,7 @@ module.exports = {
           "~components": path.resolve(__dirname, "src/components"),
           "~pages": path.resolve(__dirname, "src/pages"),
           "~resources": path.resolve(__dirname, "src/resources"),
+          "~slices": path.resolve(__dirname, "src/components/slices"),
           "~styles": path.resolve(__dirname, "src/styles"),
           "~templates": path.resolve(__dirname, "src/templates"),
         },

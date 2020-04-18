@@ -1,6 +1,6 @@
 import React from "react"
 import { RichText } from "prismic-reactjs"
-import styles from "~components/call-out.module.scss"
+import styles from "~slices/call-out.module.scss"
 
 export interface CallOutProps {
   title?: string

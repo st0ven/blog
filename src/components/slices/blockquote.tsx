@@ -1,5 +1,5 @@
 import React from "react"
-import styles from "~components/blockquote.module.scss"
+import styles from "~slices/blockquote.module.scss"
 
 interface BlockquoteProps {
   text: string

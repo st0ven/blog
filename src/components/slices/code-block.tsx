@@ -5,7 +5,7 @@ import {
   duotoneSpace,
   duotoneLight,
 } from "react-syntax-highlighter/dist/esm/styles/prism"
-import styles from "~components/code-snippet.module.scss"
+import styles from "~slices/code-block.module.scss"
 import "~styles/highlighting.scss"
 
 // create agnostic references to style mapping based on appearance setting
@@ -20,14 +20,14 @@ const highlighterOptions = {
 }
 
 // field model expected from Prismic back-end
-interface CodeSnippetProps {
+interface CodeBlockProps {
   highlight: string
   filename?: string
   // Prismic specific formatted text resposnse
   code: any
 }
 
-export function CodeSnippet({ highlight, filename, code }: CodeSnippetProps) {
+export function CodeBlock({ highlight, filename, code }: CodeBlockProps) {
   // set an initial theme based on detected appearance settings
   const [useTheme, setUseTheme] = useState<any>(hlDarkThemeStyle)
   // change the theme to be applied whenever the browser detects an appearance setting change
@@ -35,14 +35,12 @@ export function CodeSnippet({ highlight, filename, code }: CodeSnippetProps) {
     if (window && window.matchMedia) {
       const query = `(prefers-color-scheme: light)`
       const queryList = window.matchMedia(query)
-      if(queryList.addEventListener){
+      if (queryList.addEventListener) {
         queryList.addEventListener("change", (event: MediaQueryListEvent) => {
           setUseTheme(event.matches ? hlLightThemeStyle : hlDarkThemeStyle)
         })
       }
-      setUseTheme(
-        queryList.matches ? hlLightThemeStyle : hlDarkThemeStyle
-      )
+      setUseTheme(queryList.matches ? hlLightThemeStyle : hlDarkThemeStyle)
     }
   }, [])
   // render output
