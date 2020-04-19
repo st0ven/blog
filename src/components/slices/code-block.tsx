@@ -1,6 +1,10 @@
 import React, { useState, useLayoutEffect } from "react"
 import { RichText } from "prismic-reactjs"
-import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter"
+import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
+import css from "react-syntax-highlighter/dist/esm/languages/prism/css"
+import scss from "react-syntax-highlighter/dist/esm/languages/prism/scss"
+import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx"
+import tsx from "react-syntax-highlighter/dist/esm/languages/prism/tsx"
 import {
   duotoneSpace,
   duotoneLight,
@@ -26,6 +30,12 @@ interface CodeBlockProps {
   // Prismic specific formatted text resposnse
   code: any
 }
+
+// register languages to minimize static output in source files
+SyntaxHighlighter.registerLanguage("javascript", jsx)
+SyntaxHighlighter.registerLanguage("typescript", tsx)
+SyntaxHighlighter.registerLanguage("scss", scss)
+SyntaxHighlighter.registerLanguage("css", css)
 
 export function CodeBlock({ highlight, filename, code }: CodeBlockProps) {
   // set an initial theme based on detected appearance settings
