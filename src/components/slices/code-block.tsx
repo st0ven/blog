@@ -1,6 +1,6 @@
 import React, { useState, useLayoutEffect } from "react"
 import { RichText } from "prismic-reactjs"
-import { PrismLight as SyntaxHighlighter } from "react-syntax-highlighter"
+import SyntaxHighlighter from "react-syntax-highlighter/dist/esm/prism-light"
 import css from "react-syntax-highlighter/dist/esm/languages/prism/css"
 import scss from "react-syntax-highlighter/dist/esm/languages/prism/scss"
 import jsx from "react-syntax-highlighter/dist/esm/languages/prism/jsx"
