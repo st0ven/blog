@@ -27,67 +27,31 @@ pre {
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .token {
-    &.atrule {
-      color: rgba-color(foreground-0);
-    }
-    &.comment {
-      color: rgba-color(neutral, 0.4) !important;
-    }
-    &.function {
-      color: #1989b5;
-      color: #9885d6;
-    }
-    &.keyword {
-      color: #a06ef5;
-      color: rgba-color(primary);
-      color: #50a189;
-    }
-    &.hexcode,
-    &.number,
-    &.unit {
-      color: rgba-color(foreground-0);
-    }
-    &.property {
-      color: rgba-color(neutral);
-    }
-    &.string {
-      color: #baa46e;
-    }
-    &.variable {
-      color: #cc6281;
-    }
+.token {
+  &.atrule {
+    color: rgba-color(foreground-0);
   }
-}
-
-@media (prefers-color-scheme: light) {
-  .token {
-    &.atrule {
-      color: rgba-color(foreground-0);
-    }
-    &.comment {
-      color: rgba-color(neutral, 0.4) !important;
-    }
-    &.function {
-      color: darken(#9885d6, 20%);
-    }
-    &.keyword {
-      color: darken(#50a189, 8%);
-    }
-    &.hexcode,
-    &.number,
-    &.unit {
-      color: rgba-color(foreground-0);
-    }
-    &.property {
-      color: rgba-color(neutral);
-    }
-    &.string {
-      color: darken(#baa46e, 12%);
-    }
-    &.variable {
-      color: #cc6281;
-    }
+  &.comment {
+    color: rgba-color(neutral, 0.4) !important;
+  }
+  &.function {
+    color: rgba-color(prism-function);
+  }
+  &.keyword {
+    color: rgba-color(prism-keyword);
+  }
+  &.hexcode,
+  &.number,
+  &.unit {
+    color: rgba-color(foreground-0);
+  }
+  &.property {
+    color: rgba-color(neutral);
+  }
+  &.string {
+    color: rgba-color(prism-string);
+  }
+  &.variable {
+    color: rgba-color(prism-variable);
   }
 }

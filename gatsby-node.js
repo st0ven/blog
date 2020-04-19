@@ -6,9 +6,9 @@ const { linkResolver } = require(path.resolve(
   __dirname,
   "src/resources/link-resolver.js"
 ))
-
 const article_api_id = "blog_article"
 const isProduction = process.env.NODE_ENV === "production"
+
 // closure variable to store preview token from Prismic
 let prismicPreviewToken
 
@@ -36,6 +36,11 @@ exports.createPages = async ({ actions }) => {
   })
 }
 
+/*
+  When DevServer is launched locally, fetch any potential preview articles
+  that have been enabled from the prismic snackbar menu. Add these as 
+  nodes to Gatsby for them to be rendered and link-able
+*/
 exports.onCreateDevServer = isProduction
   ? null
   : function DevServerEffect({ app, actions, getNodesByType }) {
@@ -53,7 +58,6 @@ exports.onCreateDevServer = isProduction
 				valid token. Once fetched, create a new node in gatsby's store if the
 				article was not already public. This allows local support for preview content.
 			*/
-
       app.use(async (req, res, next) => {
         const { token } = req.query
         if (token && !prismicPreviewToken) {

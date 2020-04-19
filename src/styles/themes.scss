@@ -2,47 +2,52 @@ $palette: (
   black: #100f14,
   smoke: #9dacbf,
   white: #ffffff,
-  cobalt: #004ec2,
-  maroon: #9e0360,
   tangerine: #ff9a52,
-  teal: #20e1e3,
-  aqua: #027870,
   sienna: #b5300b,
   lilac: #aa82ff,
   violet: #5c4ac7,
   yellow: #ffe226,
+  gold: #c4a760,
+  moss: #50a189,
+  salmon: #cc6281,
 );
 
 // dark theme value map
 $dark-theme: (
   foreground-0: map-get($palette, white),
-  neutral: //map-get($palette, smoke),
-    desaturate(adjust-hue(lighten(map-get($palette, black), 60%), -20%), 3%),
+  neutral:
+    desaturate(adjust-hue(lighten(map-get($palette, black), 67%), -10%), 0%),
   background-2:
-    desaturate(adjust-hue(lighten(map-get($palette, black), 10%), -10%), 1%),
+    saturate(adjust-hue(lighten(map-get($palette, black), 15%), -4%), 5%),
   background-1:
-    desaturate(adjust-hue(lighten(map-get($palette, black), 3%), -2%), 0%),
-  background-0: map-get($palette, black),
+    saturate(adjust-hue(lighten(map-get($palette, black), 4%), 0%), 5%),
+  background-0: saturate(map-get($palette, black), 10%),
   primary: map-get($palette, lilac),
   secondary: map-get($palette, tangerine),
   highlight: map-get($palette, yellow),
-  code: map-get($palette, teal),
+  prism-function: desaturate(darken(map-get($palette, lilac), 6%), 40%),
+  prism-keyword: map-get($palette, moss),
+  prism-string: map-get($palette, gold),
+  prism-variable: map-get($palette, salmon),
 );
 
 // light theme value map
 $light-theme: (
   foreground-0: map-get($palette, black),
   neutral:
-    desaturate(adjust-hue(lighten(map-get($palette, black), 40%), -20%), 10%),
+    desaturate(adjust-hue(lighten(map-get($palette, black), 36%), -20%), 6%),
   background-2:
-    desaturate(adjust-hue(lighten(map-get($palette, black), 83%), -30%), 7%),
+    desaturate(adjust-hue(lighten(map-get($palette, black), 83%), -30%), 4%),
   background-1:
-    desaturate(adjust-hue(lighten(map-get($palette, black), 88%), -40%), 5%),
+    desaturate(adjust-hue(lighten(map-get($palette, black), 88%), -40%), 2%),
   background-0: map-get($palette, white),
   primary: map-get($palette, violet),
   secondary: map-get($palette, sienna),
   highlight: map-get($palette, yellow),
-  code: map-get($palette, maroon),
+  prism-function: map-get($palette, violet),
+  prism-keyword: saturate(darken(map-get($palette, moss), 12%), 20%),
+  prism-string: darken(map-get($palette, gold), 12%),
+  prism-variable: darken(map-get($palette, salmon), 4%),
 );
 
 /* populates css color variable mapping to theme-map */
