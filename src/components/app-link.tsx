@@ -10,6 +10,7 @@ interface AppLinkProps {
   children: React.ReactNode
   icon?: React.ReactNode
   iconAlignment?: string
+  replace: boolean
   onClick?: () => void
 }
 
@@ -19,6 +20,7 @@ export function AppLink({
   className = "",
   icon,
   iconAlignment = "left",
+  replace = false,
 }: AppLinkProps) {
   const linkRef: React.RefObject<a> = useRef(null)
   // build link className
@@ -40,7 +42,7 @@ export function AppLink({
     <span className={appLinkCx} tabIndex={0} onKeyUp={keyUpHandler}>
       {icon ? icon : null}
       <span>
-        <Link to={to} tabIndex={-1} ref={linkRef}>
+        <Link to={to} tabIndex={-1} ref={linkRef} replace={replace}>
           {children}
         </Link>
       </span>
