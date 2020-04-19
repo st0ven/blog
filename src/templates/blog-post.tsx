@@ -60,7 +60,7 @@ export default function BlogPost({ pageContext }: any) {
       </article>
       <hr className={styles.horizontalRule} />
       <footer>
-        <AppLink icon={<ArrowUpCircle />} to={`/${slug}/#`}>
+        <AppLink icon={<ArrowUpCircle />} to={`/${slug}/#`} replace>
           Back to top
         </AppLink>
       </footer>
