@@ -70,3 +70,15 @@ yarn-error.log
 
 #design files
 design
+
+# Ignore all syntax highlighting languages by default
+react-syntax-highlighter_languages_highlight_*.*.js
+vendors~react-syntax-highlighter_languages_highlight_*.*.js
+
+# Only enable these languages to be included into production
+!react-syntax-highlighter_languages_highlight_jsx.*.js
+!react-syntax-highlighter_languages_highlight_css.*.js
+!react-syntax-highlighter_languages_highlight_scss.*.js
+!react-syntax-highlighter_languages_highlight_html.*.js
+!react-syntax-highlighter_languages_highlight_tsx.*.js
+!react-syntax-highlighter_languages_highlight_typescript.*.js

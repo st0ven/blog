@@ -10,13 +10,12 @@
   border-style: solid;
   border-color: rgba-color(primary);
   border-radius: $unit-size-sub/2;
-  font-size: 0.875rem;
 
   h4 {
     color: rgba-color(foreground-0);
     text-transform: capitalize;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    font-size: 1.2rem;
   }
 
   p:last-of-type {

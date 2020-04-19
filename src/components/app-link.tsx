@@ -1,17 +1,14 @@
 import React, { useCallback, useRef } from "react"
 import cx from "classnames"
-import { Link } from "gatsby"
+import { Link, GatsbyLinkProps } from "gatsby"
 import styles from "~components/app-link.module.scss"
 
-interface AppLinkProps {
-  to?: string
+interface AppLinkProps extends GatsbyLinkProps<any>{
   target?: string
   className?: string
   children: React.ReactNode
   icon?: React.ReactNode
   iconAlignment?: string
-  replace: boolean
-  onClick?: () => void
 }
 
 export function AppLink({
